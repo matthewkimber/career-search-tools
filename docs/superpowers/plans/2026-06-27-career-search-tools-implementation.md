@@ -19,6 +19,12 @@
 - Export requires Pandoc ≥ 3.0 (DOCX); PDF engine optional (LaTeX or wkhtmltopdf)
 - Git workflow: GitHub Flow — feature branch per phase, PR to main before next phase
 - Specs: `./specs/` | User docs: `./docs/` | Plans: `./docs/superpowers/plans/`
+- **Every skill requires evals** per [agentskills.io/skill-creation/evaluating-skills](https://agentskills.io/skill-creation/evaluating-skills):
+  - `skills/<name>/evals/evals.json` — minimum 3 test cases (happy path, varied phrasing, edge case)
+  - Assertions added to each test case after first run
+  - Eval workspace at `<name>-workspace/` (gitignored via `*-workspace/` in `.gitignore`)
+  - Evals must pass (or failures documented) before PR is merged
+  - Each skill task below includes an **Evals** step — follow the pattern in Task 2
 
 ---
 
@@ -244,11 +250,118 @@ Start Claude Code in a temp directory and run `/setup-profile`. Verify:
 - `job-search/profile/narrative.md` is created with `preferred_template:` line
 - `job-search/profile/references.md` is created with the table template
 
-- [ ] **Step 5: Commit**
+- [ ] **Step 5: Write evals**
+
+```bash
+mkdir -p skills/setup-profile/evals/files
+```
+
+Write `skills/setup-profile/evals/evals.json`:
+
+```json
+{
+  "skill_name": "setup-profile",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I want to set up my job search profile. I'm a senior software engineer with 8 years of experience, mostly in backend Python and distributed systems. I've worked at Stripe and Airbnb.",
+      "expected_output": "Skill asks for information in phases (not all at once), then creates job-search/profile/profile.md with correct structure, narrative.md with positioning statement and preferred_template field, and references.md with the table template.",
+      "assertions": [
+        "job-search/profile/profile.md is created",
+        "job-search/profile/profile.md contains a Work Experience section",
+        "job-search/profile/narrative.md is created",
+        "job-search/profile/narrative.md contains a line starting with 'preferred_template:'",
+        "job-search/profile/references.md is created",
+        "job-search/profile/references.md contains a markdown table",
+        "Skill asked questions in phases, not all at once"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "hey can you help me get started with my job search? im a designer, been doing UX for about 5 years, mostly at startups",
+      "expected_output": "Skill handles casual phrasing, still collects information in structured phases, creates all three profile files with correct structure.",
+      "assertions": [
+        "job-search/profile/profile.md is created with a Skills section",
+        "job-search/profile/narrative.md is created",
+        "job-search/profile/references.md is created"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Run setup-profile but I only want to update my narrative — I already have a profile.md",
+      "expected_output": "Skill detects existing profile.md and asks whether to update Phase 1, Phase 2, or both. If user says Phase 2 only, it runs only the narrative phase and does not overwrite profile.md.",
+      "files": ["evals/files/existing-profile.md"],
+      "assertions": [
+        "Skill asks which phase to update rather than starting from scratch",
+        "If Phase 2 chosen, narrative.md is updated",
+        "If Phase 2 chosen, profile.md is not overwritten"
+      ]
+    }
+  ]
+}
+```
+
+Create the edge-case input file `skills/setup-profile/evals/files/existing-profile.md`:
+
+```markdown
+# Professional Profile
+
+## Contact
+Jane Doe | jane@example.com | (555) 555-5555 | linkedin.com/in/janedoe | San Francisco, CA
+
+## Summary
+Experienced UX designer with 5 years building mobile apps at early-stage startups.
+
+## Work Experience
+### Senior UX Designer — Acme Startup (2022–Present)
+- Led redesign of onboarding flow, reducing drop-off by 40%
+
+## Skills
+### Technical
+Figma, Sketch, Framer, HTML/CSS
+```
+
+- [ ] **Step 6: Run evals (with_skill vs without_skill)**
+
+For each test case, run two sessions — one with the skill, one without:
+
+```bash
+# Create workspace for iteration 1
+mkdir -p setup-profile-workspace/iteration-1/eval-happy-path/{with_skill,without_skill}/outputs
+mkdir -p setup-profile-workspace/iteration-1/eval-casual-phrasing/{with_skill,without_skill}/outputs
+mkdir -p setup-profile-workspace/iteration-1/eval-update-only/{with_skill,without_skill}/outputs
+```
+
+For each with_skill run, start a fresh Claude Code session with the plugin installed, provide the test prompt, and save outputs to `with_skill/outputs/`. Record timing:
+```json
+{ "total_tokens": 0, "duration_ms": 0 }
+```
+(Fill in from the task completion notification.)
+
+Repeat with no skill installed for the without_skill baseline.
+
+- [ ] **Step 7: Grade assertions and compute benchmark**
+
+For each eval, compare outputs against assertions. Write `grading.json` per the format at https://agentskills.io/skill-creation/evaluating-skills. Require concrete evidence for every PASS.
+
+Aggregate into `setup-profile-workspace/iteration-1/benchmark.json`:
+```json
+{
+  "run_summary": {
+    "with_skill": { "pass_rate": { "mean": 0.0 }, "tokens": { "mean": 0 } },
+    "without_skill": { "pass_rate": { "mean": 0.0 }, "tokens": { "mean": 0 } },
+    "delta": { "pass_rate": 0.0 }
+  }
+}
+```
+
+If any assertions fail, iterate on `SKILL.md` and re-run in `iteration-2/` before merging.
+
+- [ ] **Step 8: Commit**
 
 ```bash
 git add skills/setup-profile/
-git commit -m "feat: add setup-profile skill"
+git commit -m "feat: add setup-profile skill with evals"
 ```
 
 ---
