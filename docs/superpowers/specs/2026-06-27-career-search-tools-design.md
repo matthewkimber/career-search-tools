@@ -80,13 +80,23 @@ Reads `jd.md` and `research.md`, then produces a structured guide for identifyin
 ### Application Materials
 
 **`/tailor-resume <company> <role> [template]`**
-Reads `profile.md`, `narrative.md`, `research.md`, and `jd.md`. First presents available resume templates and prompts the user to select one (or uses the preferred template saved in `profile.md` if set). Then produces a resume tailored to the specific role: reorders and rewords experience bullets to match JD language, surfaces relevant skills, adjusts the summary/headline — all formatted to match the chosen template's structure and section order. Includes a brief note on what was emphasized and why. Saves the chosen template name to `profile.md` as the new default preference.
+Reads `profile.md`, `narrative.md`, `research.md`, and `jd.md`. Proceeds in three steps:
+
+1. **Template selection** — Presents available templates and prompts the user to select one (or uses the preferred template saved in `profile.md` if set). Saves the choice as the new default.
+2. **Content tailoring** — Reorders and rewords experience bullets to match JD language, surfaces relevant skills, adjusts the summary/headline to match the chosen template's structure and section order.
+3. **ATS optimization pass** — Performs a keyword gap analysis: extracts high-signal terms and required skills from `jd.md`, checks coverage in the tailored draft, and flags any missing terms with suggestions for where to naturally incorporate them. Includes a summary of ATS compliance (keyword coverage score, any formatting warnings).
+
+All output follows the ATS safety rules defined in `skills/tailor-resume/ats-optimization.md`.
 
 **Templates** (shipped in `skills/tailor-resume/templates/`):
+All four templates are ATS-safe by design: standard section headings, single-column layout, no tables or graphics, plain-text contact info, consistent date formatting, no special Unicode characters. Each template file includes an ATS compliance note.
 - `classic.md` — traditional chronological, safe for any industry
-- `modern.md` — clean, ATS-optimized, contemporary layout
+- `modern.md` — clean, contemporary layout; ATS-optimized single-column
 - `executive.md` — senior/leadership roles; emphasizes scope, team size, and business impact
 - `tech.md` — engineering roles; skills and projects section is prominent
+
+**Supporting files:**
+- `skills/tailor-resume/ats-optimization.md` — canonical ATS safety rules: approved section headings, formatting constraints, keyword strategy, file export guidance (`.docx` preferred over `.pdf` for most ATS)
 
 **Output:** Appends to `job-search/companies/<company-slug>/positions/<role-slug>/materials.md`
 
@@ -187,6 +197,7 @@ career-search-tools/
 │   │   └── SKILL.md
 │   ├── tailor-resume/
 │   │   ├── SKILL.md
+│   │   ├── ats-optimization.md
 │   │   └── templates/
 │   │       ├── classic.md
 │   │       ├── modern.md
@@ -265,6 +276,15 @@ Full narrative walkthrough of the recommended workflow, phase by phase:
 Includes: real-looking example commands with company/role slugs, example output snippets, and guidance on what to do when context files are missing.
 
 ### `docs/ats-guide.md`
+The single user-facing reference for all ATS concerns — both resume safety and application form fields.
+
+**Resume ATS safety:**
+- Why ATS safety matters and how the plugin enforces it
+- What makes a resume ATS-unsafe (tables, columns, graphics, non-standard headings, special characters)
+- How to export: `.docx` vs. `.pdf` guidance per ATS system
+- How the keyword gap analysis in `/tailor-resume` works
+
+**Application form fields:**
 - Supported systems: Workday, Greenhouse, Lever
 - Common fields per system and how the plugin handles them
 - Tips per platform (Workday character limits, Greenhouse screening questions, etc.)
