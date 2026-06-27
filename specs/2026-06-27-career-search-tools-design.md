@@ -33,7 +33,8 @@ job-search/
         <role-slug>/
           jd.md         ← full job description
           team.md       ← hiring manager, panel, key contacts for this role
-          materials.md  ← tailored resume + cover letter variants
+          materials.md  ← tailored resume + cover letter variants (markdown)
+          resume.json   ← portable export in JSON Resume v1.0.0 format
           outreach.md   ← cold/warm outreach drafts, sent status, replies
           tracking.md   ← status, interview notes, next steps, offer details
   pipeline.md           ← cross-company, cross-position status dashboard
@@ -43,7 +44,7 @@ job-search/
 
 ---
 
-## Skills (14 total)
+## Skills (15 total)
 
 ### Foundation
 
@@ -98,12 +99,19 @@ All four templates are ATS-safe by design: standard section headings, single-col
 **Supporting files:**
 - `skills/tailor-resume/ats-optimization.md` — canonical ATS safety rules: approved section headings, formatting constraints, keyword strategy, file export guidance (`.docx` preferred over `.pdf` for most ATS)
 
+**JSON Resume alignment:** All four templates are structured to mirror the [JSON Resume schema v1.0.0](https://jsonresume.org/schema) section hierarchy (`basics`, `work`, `education`, `skills`, `projects`, etc.) so that `/export-resume` can map the markdown output to valid JSON cleanly and consistently.
+
 **Output:** Appends to `job-search/companies/<company-slug>/positions/<role-slug>/materials.md`
 
 **`/write-cover-letter <company> <role>`**
 Reads `profile.md`, `narrative.md`, `research.md`, `jd.md`, and `team.md` (if available). Writes a cover letter that references the specific role, demonstrates knowledge of the company, connects the user's narrative to the company's needs, and names the hiring manager if known. Appends to `materials.md`.
 
 **Output:** Appends to `job-search/companies/<company-slug>/positions/<role-slug>/materials.md`
+
+**`/export-resume <company> <role>`**
+Reads the tailored resume from `materials.md` and structured data from `profile.md`, then converts to a valid [JSON Resume](https://jsonresume.org/schema) v1.0.0 `resume.json` file. JSON Resume is the de facto open standard for portable resume data — the output can be imported into compatible resume builders, rendered into HTML/PDF via the `resume-cli` tool and any of its 30+ themes, or fed into other job search tools without reformatting. Writes to `resume.json` in the position directory alongside `materials.md`.
+
+**Output:** `job-search/companies/<company-slug>/positions/<role-slug>/resume.json`
 
 **`/optimize-linkedin`**
 Reads `profile.md` and `narrative.md`. Produces section-by-section LinkedIn optimization: headline, about section, experience bullets, skills to feature, featured section ideas, and connection/engagement recommendations. Output is ready to copy-paste and always saved to `job-search/profile/linkedin-draft.md` for reference.
@@ -208,6 +216,8 @@ career-search-tools/
 │   │       └── tech.md
 │   ├── write-cover-letter/
 │   │   └── SKILL.md
+│   ├── export-resume/
+│   │   └── SKILL.md
 │   ├── optimize-linkedin/
 │   │   └── SKILL.md
 │   ├── build-personal-site/
@@ -249,7 +259,7 @@ Documentation lives in `docs/` and is a first-class deliverable alongside the sk
 
 ### `docs/README.md`
 - What the plugin does (one paragraph)
-- Feature list (14 skills + interview coach agent)
+- Feature list (15 skills + interview coach agent)
 - Quick start (4-step path from install to first tailored resume)
 - Links to `installation.md` and `usage-guide.md`
 
@@ -273,7 +283,7 @@ Full narrative walkthrough of the recommended workflow, phase by phase:
 
 - **Phase 1 — Profile Setup** (one-time): `/setup-profile`
 - **Phase 2 — Target a Company**: `/research-company`, `/add-position`, `/find-hiring-team`
-- **Phase 3 — Apply**: `/tailor-resume`, `/write-cover-letter`, `/apply-ats`
+- **Phase 3 — Apply**: `/tailor-resume`, `/write-cover-letter`, `/export-resume` (portable JSON), `/apply-ats`
 - **Phase 4 — Outreach**: `/outreach` (timing tips: before vs. after applying)
 - **Phase 5 — Interview**: `/prep-interview`, `interview-coach` agent, `/post-interview`
 - **Phase 6 — Track and Decide**: `/pipeline` (run weekly), `/analyze-offer`
@@ -288,6 +298,12 @@ The single user-facing reference for all ATS concerns — both resume safety and
 - What makes a resume ATS-unsafe (tables, columns, graphics, non-standard headings, special characters)
 - How to export: `.docx` vs. `.pdf` guidance per ATS system
 - How the keyword gap analysis in `/tailor-resume` works
+
+**Portability:**
+- What JSON Resume is and why the plugin uses it
+- How to use `/export-resume` and what to do with the output
+- Using `resume-cli` to render `resume.json` to HTML or PDF with any theme
+- Tools and sites that accept JSON Resume format as an import
 
 **Application form fields:**
 - Supported systems: Workday, Greenhouse, Lever
@@ -305,7 +321,8 @@ The single user-facing reference for all ATS concerns — both resume safety and
 4. `/research-company acme-corp` → `job-search/companies/acme-corp/research.md` created
 5. `/add-position acme-corp senior-engineer` with pasted JD → position directory created
 6. `/tailor-resume acme-corp senior-engineer` → reads profile + JD, writes to `materials.md`
-7. `/pipeline` → reads tracking files, writes `pipeline.md`, displays dashboard
-8. `interview-coach` agent → loads role context, conducts multi-turn mock interview
-9. `SessionStart` hook → fires pipeline summary when `pipeline.md` exists, silent otherwise
-10. All docs render correctly in a Markdown viewer
+7. `/export-resume acme-corp senior-engineer` → produces valid `resume.json` in JSON Resume v1.0.0 format
+8. `/pipeline` → reads tracking files, writes `pipeline.md`, displays dashboard
+9. `interview-coach` agent → loads role context, conducts multi-turn mock interview
+10. `SessionStart` hook → fires pipeline summary when `pipeline.md` exists, silent otherwise
+11. All docs render correctly in a Markdown viewer
