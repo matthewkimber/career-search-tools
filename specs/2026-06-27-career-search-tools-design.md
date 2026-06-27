@@ -33,8 +33,10 @@ job-search/
         <role-slug>/
           jd.md         ← full job description
           team.md       ← hiring manager, panel, key contacts for this role
-          materials.md  ← tailored resume + cover letter variants (markdown)
-          resume.json   ← portable export in JSON Resume v1.0.0 format
+          materials.md  ← tailored resume + cover letter variants (markdown, source of truth)
+          resume.docx   ← exported Word document (pandoc + reference DOCX template)
+          resume.json   ← exported JSON Resume v1.0.0 (tool portability)
+          resume.pdf    ← exported PDF (optional, requires PDF engine)
           outreach.md   ← cold/warm outreach drafts, sent status, replies
           tracking.md   ← status, interview notes, next steps, offer details
   pipeline.md           ← cross-company, cross-position status dashboard
@@ -108,10 +110,25 @@ Reads `profile.md`, `narrative.md`, `research.md`, `jd.md`, and `team.md` (if av
 
 **Output:** Appends to `job-search/companies/<company-slug>/positions/<role-slug>/materials.md`
 
-**`/export-resume <company> <role>`**
-Reads the tailored resume from `materials.md` and structured data from `profile.md`, then converts to a valid [JSON Resume](https://jsonresume.org/schema) v1.0.0 `resume.json` file. JSON Resume is the de facto open standard for portable resume data — the output can be imported into compatible resume builders, rendered into HTML/PDF via the `resume-cli` tool and any of its 30+ themes, or fed into other job search tools without reformatting. Writes to `resume.json` in the position directory alongside `materials.md`.
+**`/export-resume <company> <role> [format]`**
+Exports the tailored resume from `materials.md` into a portable format. Reads the template preference from `profile.md` to select the matching reference DOCX. Supported formats:
 
-**Output:** `job-search/companies/<company-slug>/positions/<role-slug>/resume.json`
+- **`docx`** (default) — Runs `pandoc materials.md --reference-doc=<template>-reference.docx -o resume.docx` via Claude's Bash tool. Produces an ATS-safe, fully styled Word document ready to submit or convert to PDF. The reference DOCX files ship with the plugin and define the visual styling (fonts, spacing, heading styles) for each template.
+- **`json`** — Converts `materials.md` to a valid [JSON Resume](https://jsonresume.org/schema) v1.0.0 `resume.json` file. Portable to any compatible resume builder, renderer, or tool.
+- **`pdf`** — Runs pandoc with a PDF engine (requires a LaTeX distribution or `wkhtmltopdf` installed). Documents this requirement; falls back with instructions if no PDF engine is detected. Users without a PDF engine can open `resume.docx` and export to PDF from Word or LibreOffice.
+
+**Runtime dependency:** Requires [Pandoc](https://pandoc.org/installing.html) for `docx` and `pdf` formats. Installation is documented in `docs/installation.md`. The skill checks for pandoc and prints a helpful install message if it's missing.
+
+**Template mapping:** The template name stored in `profile.md` maps to a reference DOCX in `skills/export-resume/templates/`:
+- `classic` → `classic-reference.docx`
+- `modern` → `modern-reference.docx`
+- `executive` → `executive-reference.docx`
+- `tech` → `tech-reference.docx`
+
+**Output:**
+- `job-search/companies/<company-slug>/positions/<role-slug>/resume.docx` (docx format)
+- `job-search/companies/<company-slug>/positions/<role-slug>/resume.json` (json format)
+- `job-search/companies/<company-slug>/positions/<role-slug>/resume.pdf` (pdf format)
 
 **`/optimize-linkedin`**
 Reads `profile.md` and `narrative.md`. Produces section-by-section LinkedIn optimization: headline, about section, experience bullets, skills to feature, featured section ideas, and connection/engagement recommendations. Output is ready to copy-paste and always saved to `job-search/profile/linkedin-draft.md` for reference.
@@ -217,7 +234,12 @@ career-search-tools/
 │   ├── write-cover-letter/
 │   │   └── SKILL.md
 │   ├── export-resume/
-│   │   └── SKILL.md
+│   │   ├── SKILL.md
+│   │   └── templates/
+│   │       ├── classic-reference.docx
+│   │       ├── modern-reference.docx
+│   │       ├── executive-reference.docx
+│   │       └── tech-reference.docx
 │   ├── optimize-linkedin/
 │   │   └── SKILL.md
 │   ├── build-personal-site/
@@ -276,7 +298,7 @@ Step-by-step install for both platforms:
 2. Grant file system access to your job search project folder when prompted
 3. Run `/setup-profile` to initialize
 
-Also covers: scope guidance (user vs. project install), troubleshooting (`claude plugin validate`, `/plugin` errors tab).
+Also covers: scope guidance (user vs. project install), troubleshooting (`claude plugin validate`, `/plugin` errors tab), and installing Pandoc for DOCX/PDF export (`brew install pandoc` on macOS, `winget install pandoc` on Windows, `apt install pandoc` on Linux).
 
 ### `docs/usage-guide.md`
 Full narrative walkthrough of the recommended workflow, phase by phase:
@@ -299,11 +321,11 @@ The single user-facing reference for all ATS concerns — both resume safety and
 - How to export: `.docx` vs. `.pdf` guidance per ATS system
 - How the keyword gap analysis in `/tailor-resume` works
 
-**Portability:**
-- What JSON Resume is and why the plugin uses it
-- How to use `/export-resume` and what to do with the output
-- Using `resume-cli` to render `resume.json` to HTML or PDF with any theme
-- Tools and sites that accept JSON Resume format as an import
+**Export formats:**
+- How to use `/export-resume` and the three supported formats (`docx`, `json`, `pdf`)
+- Installing Pandoc and how the reference DOCX templates work
+- When to use DOCX vs. PDF (DOCX preferred for most ATS; convert to PDF in Word/LibreOffice when required)
+- JSON Resume portability: using `resume-cli` to render with themes; tools that accept JSON Resume as an import
 
 **Application form fields:**
 - Supported systems: Workday, Greenhouse, Lever
@@ -321,7 +343,9 @@ The single user-facing reference for all ATS concerns — both resume safety and
 4. `/research-company acme-corp` → `job-search/companies/acme-corp/research.md` created
 5. `/add-position acme-corp senior-engineer` with pasted JD → position directory created
 6. `/tailor-resume acme-corp senior-engineer` → reads profile + JD, writes to `materials.md`
-7. `/export-resume acme-corp senior-engineer` → produces valid `resume.json` in JSON Resume v1.0.0 format
+7. `/export-resume acme-corp senior-engineer` → produces `resume.docx` via pandoc with correct template styles applied
+8. `/export-resume acme-corp senior-engineer json` → produces valid `resume.json` in JSON Resume v1.0.0 format
+8a. `/export-resume acme-corp senior-engineer pdf` → produces `resume.pdf` or gracefully reports missing PDF engine
 8. `/pipeline` → reads tracking files, writes `pipeline.md`, displays dashboard
 9. `interview-coach` agent → loads role context, conducts multi-turn mock interview
 10. `SessionStart` hook → fires pipeline summary when `pipeline.md` exists, silent otherwise
