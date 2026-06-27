@@ -79,8 +79,14 @@ Reads `jd.md` and `research.md`, then produces a structured guide for identifyin
 
 ### Application Materials
 
-**`/tailor-resume <company> <role>`**
-Reads `profile.md`, `narrative.md`, `research.md`, and `jd.md`. Produces a resume tailored to the specific role: reorders and rewords experience bullets to match JD language, surfaces relevant skills, adjusts the summary/headline. Writes a ready-to-format version to `materials.md` with clear section headers. Includes a brief note on what was emphasized and why.
+**`/tailor-resume <company> <role> [template]`**
+Reads `profile.md`, `narrative.md`, `research.md`, and `jd.md`. First presents available resume templates and prompts the user to select one (or uses the preferred template saved in `profile.md` if set). Then produces a resume tailored to the specific role: reorders and rewords experience bullets to match JD language, surfaces relevant skills, adjusts the summary/headline — all formatted to match the chosen template's structure and section order. Includes a brief note on what was emphasized and why. Saves the chosen template name to `profile.md` as the new default preference.
+
+**Templates** (shipped in `skills/tailor-resume/templates/`):
+- `classic.md` — traditional chronological, safe for any industry
+- `modern.md` — clean, ATS-optimized, contemporary layout
+- `executive.md` — senior/leadership roles; emphasizes scope, team size, and business impact
+- `tech.md` — engineering roles; skills and projects section is prominent
 
 **Output:** Appends to `job-search/companies/<company-slug>/positions/<role-slug>/materials.md`
 
@@ -180,7 +186,12 @@ career-search-tools/
 │   ├── find-hiring-team/
 │   │   └── SKILL.md
 │   ├── tailor-resume/
-│   │   └── SKILL.md
+│   │   ├── SKILL.md
+│   │   └── templates/
+│   │       ├── classic.md
+│   │       ├── modern.md
+│   │       ├── executive.md
+│   │       └── tech.md
 │   ├── write-cover-letter/
 │   │   └── SKILL.md
 │   ├── optimize-linkedin/
