@@ -43,7 +43,7 @@ job-search/
 
 ---
 
-## Skills (13 total)
+## Skills (14 total)
 
 ### Foundation
 
@@ -107,6 +107,9 @@ Reads `profile.md`, `narrative.md`, `research.md`, `jd.md`, and `team.md` (if av
 
 **`/optimize-linkedin`**
 Reads `profile.md` and `narrative.md`. Produces section-by-section LinkedIn optimization: headline, about section, experience bullets, skills to feature, featured section ideas, and connection/engagement recommendations. Output is ready to copy-paste and always saved to `job-search/profile/linkedin-draft.md` for reference.
+
+**`/build-personal-site`**
+Reads `profile.md` and `narrative.md`. Generates copy for a personal/portfolio website: a bio (short and long variants), a headline and tagline, project and experience write-ups formatted for a web audience, a skills section, and a contact page blurb. Output is written to `job-search/profile/personal-site-draft.md`, organized by page/section so it can be dropped into any site builder (Notion, Framer, GitHub Pages, etc.) without restructuring.
 
 ---
 
@@ -207,6 +210,8 @@ career-search-tools/
 │   │   └── SKILL.md
 │   ├── optimize-linkedin/
 │   │   └── SKILL.md
+│   ├── build-personal-site/
+│   │   └── SKILL.md
 │   ├── outreach/
 │   │   └── SKILL.md
 │   ├── apply-ats/
@@ -244,7 +249,7 @@ Documentation lives in `docs/` and is a first-class deliverable alongside the sk
 
 ### `docs/README.md`
 - What the plugin does (one paragraph)
-- Feature list (13 skills + interview coach agent)
+- Feature list (14 skills + interview coach agent)
 - Quick start (4-step path from install to first tailored resume)
 - Links to `installation.md` and `usage-guide.md`
 
