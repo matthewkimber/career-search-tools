@@ -1,0 +1,47 @@
+{
+  "skill_name": "find-hiring-team",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "/find-hiring-team Stripe senior-backend-engineer",
+      "expected_output": "Skill reads research.md and jd.md for the stripe/senior-backend-engineer position, then guides the user through four ordered research steps: hiring manager search, panel/interviewers, recruiter, and key adjacent contacts. After the user provides findings, skill writes team.md with all required sections filled in (Hiring Manager, Likely Panel table, Recruiter, Key Contacts table, Research Notes). Completion message references /outreach and /tailor-resume as next steps.",
+      "assertions": [
+        "Skill reads job-search/companies/stripe/positions/senior-backend-engineer/jd.md before starting",
+        "Skill reads job-search/companies/stripe/research.md before starting",
+        "Skill guides hiring manager search before asking about panel",
+        "Skill guides panel search before asking about recruiter",
+        "job-search/companies/stripe/positions/senior-backend-engineer/team.md is written",
+        "team.md contains '# Hiring Team: Senior Backend Engineer at Stripe' as heading",
+        "team.md contains a 'Hiring Manager' section with Name, Title, LinkedIn, Background, Notes fields",
+        "team.md contains a 'Likely Panel' markdown table",
+        "team.md contains a 'Recruiter' section",
+        "team.md contains a 'Key Contacts' table",
+        "team.md contains a 'Research Notes' section",
+        "Completion message mentions /outreach as a next step"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "find hiring team for my Acme Corp product manager role",
+      "expected_output": "Skill handles natural language, resolves to acme-corp/product-manager slugs, reads the relevant files, and walks the user through the four research strategies in order. When the user reports they couldn't find a recruiter, the skill notes this in Research Notes rather than leaving the section blank or erroring out.",
+      "assertions": [
+        "Skill converts natural language to correct slugs acme-corp and product-manager",
+        "team.md is written at job-search/companies/acme-corp/positions/product-manager/team.md",
+        "team.md Research Notes section acknowledges any gaps in information found",
+        "Completion message mentions both /outreach and /tailor-resume"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "/find-hiring-team OpenAI staff-engineer",
+      "expected_output": "When jd.md explicitly names the hiring manager or team in the job description, the skill surfaces that information proactively during the hiring manager search step rather than relying solely on LinkedIn. Research Notes section reflects confidence level and notes what could not be confirmed. team.md is fully structured even if some fields are blank.",
+      "assertions": [
+        "Skill surfaces any hiring team information found in jd.md during research guidance",
+        "team.md Hiring Manager section is present even if some fields are blank",
+        "team.md Likely Panel table is present even if no rows are populated",
+        "team.md Research Notes section describes confidence level and any gaps",
+        "team.md is written at job-search/companies/openai/positions/staff-engineer/team.md"
+      ]
+    }
+  ]
+}

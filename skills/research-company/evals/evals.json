@@ -1,0 +1,41 @@
+{
+  "skill_name": "research-company",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "/research-company Stripe",
+      "expected_output": "Skill creates job-search/companies/stripe/ directory, writes research.md from template with 'Stripe' substituted for [Company Name], then guides the user section by section: first asking about overview/financials, then culture, then leadership, then recent news, then helping articulate why this company fits.",
+      "assertions": [
+        "job-search/companies/stripe/ directory is created",
+        "job-search/companies/stripe/research.md is created",
+        "research.md contains '# Company Research: Stripe' as the heading",
+        "research.md contains all template sections: Overview, Products & Services, Financial Health, Culture & Values, Key Leadership, Competitive Landscape, Why This Company, Research Sources",
+        "Skill asks for information section by section, not all at once",
+        "Skill asks about overview/financials first before moving to culture"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "research company Acme Corp for me",
+      "expected_output": "Skill handles natural language phrasing, converts 'Acme Corp' to slug 'acme-corp', creates job-search/companies/acme-corp/research.md with correct heading 'Company Research: Acme Corp', and walks through research sections interactively.",
+      "assertions": [
+        "job-search/companies/acme-corp/ directory is created",
+        "job-search/companies/acme-corp/research.md is created",
+        "research.md contains '# Company Research: Acme Corp' as the heading",
+        "Skill guides user through at least 4 distinct research sections",
+        "Completion message mentions /add-position as next step"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "/research-company OpenAI",
+      "expected_output": "After the user provides research findings for each section, the skill fills in the template fully and marks off which Research Sources were consulted. The 'Why This Company' section reflects the user's narrative.md target roles and industries.",
+      "assertions": [
+        "job-search/companies/openai/research.md is created",
+        "research.md Research Sources checklist has at least one source checked off after user provides data",
+        "research.md Why This Company section contains substantive content (not left as placeholder)",
+        "Completion message mentions /add-position <company> <role> as next step"
+      ]
+    }
+  ]
+}
