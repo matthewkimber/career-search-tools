@@ -1,0 +1,119 @@
+{
+  "version": "1.0.0",
+  "skill_name": "apply-ats",
+  "tests": [
+    {
+      "id": "apply-ats-001",
+      "prompt": "/apply-ats acme-corp senior-engineer workday",
+      "context": {
+        "profile.md": "Name: Alex Rivera\nEmail: alex@example.com\nPhone: 555-0300\nLocation: Austin, TX 78701\nAuthorized to work in US: Yes\nVisa sponsorship required: No\nCurrent Title: Senior Software Engineer\nWork Experience:\n- Senior Software Engineer at FinCo (Jan 2021–present): Python, Kafka, distributed systems\n- Software Engineer at StartupX (Jun 2018–Dec 2020): Python, REST APIs",
+        "narrative.md": "Positioning: Backend engineer with 8 years Python experience. Target: senior IC roles at data-driven companies.",
+        "jd.md": "Role: Senior Engineer. Key skills: Python (5+ years required), distributed systems, Kafka. Compensation: $150K–$190K.",
+        "materials.md": "# Resume\n[resume content]\n# Cover Letter\n[cover letter content]"
+      },
+      "user_responses": {
+        "salary_expectations": "$160K–$175K base",
+        "how_did_you_hear": "LinkedIn job posting",
+        "willing_to_relocate": "No",
+        "available_start_date": "4 weeks notice",
+        "short_answer_questions": "none"
+      },
+      "expected_output": "All standard fields answered with clear labels. Workday-specific fields covered (DOCX resume note, session timeout warning, char limits). Years of Python experience calculated as 8 from work history. Salary field shows $160K–$175K. No file written — output is printed for copy-paste.",
+      "assertions": [
+        "Work authorization field answered 'Yes' (from profile.md)",
+        "Visa sponsorship answered 'No' (from profile.md)",
+        "Current title is 'Senior Software Engineer'",
+        "Years of Python experience calculated as approximately 8 years (2018–present)",
+        "Salary field shows '$160K–$175K' (from user response)",
+        "How did you hear: 'LinkedIn job posting'",
+        "Workday-specific tip about DOCX upload included",
+        "Session timeout warning (30 minutes) mentioned",
+        "No file written to disk — output is for copy-paste",
+        "Workday character limits (4,000 per role, 5,000 cover letter) referenced"
+      ]
+    },
+    {
+      "id": "apply-ats-002",
+      "prompt": "/apply-ats techgiant staff-engineer greenhouse",
+      "context": {
+        "profile.md": "Name: Jamie Wong\nEmail: jamie@example.com\nPhone: 555-0400\nLocation: Seattle, WA 98101\nAuthorized to work in US: Yes\nVisa sponsorship required: No\nCurrent Title: Principal Engineer\nWork Experience:\n- Principal Engineer at CloudCo (Feb 2019–present): distributed systems, caching, Go\n- Senior Engineer at WebCo (Jan 2016–Jan 2019): microservices, Kubernetes",
+        "narrative.md": "Positioning: Staff-level engineer solving infrastructure problems at scale. Target: platform engineering at top-tier tech companies.",
+        "jd.md": "Role: Staff Engineer, Platform. Requirements: 10+ years experience, distributed systems, Go, Kubernetes, technical leadership. Greenhouse application.",
+        "materials.md": "# Resume\n[resume content]"
+      },
+      "user_responses": {
+        "salary_expectations": "$230K–$260K total comp",
+        "how_did_you_hear": "Referral from Lin Zhang",
+        "willing_to_relocate": "Open to discussion",
+        "available_start_date": "6 weeks",
+        "short_answer_questions": "Tell us about a project you're proud of (500 chars)\nWhy TechGiant? (500 chars)"
+      },
+      "expected_output": "Standard fields answered. Greenhouse-specific short-answer questions answered with substantive responses under 500 chars each. Referral source flagged clearly. Greenhouse tips included (one-session submission, short answers scored).",
+      "assertions": [
+        "Years of experience calculated as 10+ years (2016–present)",
+        "Short-answer 'project you're proud of' response is 500 characters or fewer",
+        "Short-answer 'Why TechGiant?' response is 500 characters or fewer and references TechGiant specifically",
+        "How did you hear field shows referral with Lin Zhang's name",
+        "Greenhouse tip about one-session submission included",
+        "Greenhouse note about short answers being scored included",
+        "Work authorization dropdown guidance (US Citizen / Green Card / Visa / Other) included",
+        "Output is printed for copy-paste, no file written"
+      ]
+    },
+    {
+      "id": "apply-ats-003",
+      "prompt": "/apply-ats startupco backend-engineer lever",
+      "context": {
+        "profile.md": "Name: Jordan Kim\nEmail: jordan@example.com\nPhone: 555-0600\nLocation: Remote (Boston, MA)\nAuthorized to work in US: Yes\nVisa sponsorship required: No\nCurrent Title: Senior Backend Engineer\nCurrent Company: ScaleCo\nGitHub: github.com/jordankim\nWork Experience:\n- Senior Backend Engineer at ScaleCo (Mar 2020–present): Node.js, PostgreSQL, microservices\n- Engineer at AgencyX (Jan 2018–Feb 2020): REST APIs, Python",
+        "narrative.md": "Positioning: Backend engineer focused on developer productivity. Target: Series A–B startups.",
+        "jd.md": "Role: Senior Backend Engineer. Requirements: Node.js, PostgreSQL, 5+ years backend. Lever application system.",
+        "materials.md": "# Resume\n[resume content]"
+      },
+      "user_responses": {
+        "salary_expectations": "$145K–$165K",
+        "how_did_you_hear": "Company website",
+        "willing_to_relocate": "No — remote preferred",
+        "available_start_date": "2–3 weeks",
+        "short_answer_questions": "none"
+      },
+      "expected_output": "Standard fields answered. Lever-specific fields filled: Current Company (ScaleCo), Current Title, GitHub link. Additional Information field guidance included. Recruiter-card tip included.",
+      "assertions": [
+        "Current Company field shows 'ScaleCo'",
+        "Current Title shows 'Senior Backend Engineer'",
+        "GitHub profile URL included (github.com/jordankim)",
+        "Additional Information field guidance provided with suggested content",
+        "Lever tip about recruiter card visibility included",
+        "Lever tip about referrals being flagged in source field included",
+        "Years of experience calculated as approximately 8 years (2018–present)",
+        "Output is printed for copy-paste, no file written"
+      ]
+    },
+    {
+      "id": "apply-ats-004",
+      "prompt": "/apply-ats bigbank vp-analytics",
+      "context": {
+        "profile.md": "Name: Morgan Davis\nEmail: morgan@example.com\nPhone: 555-0700\nLocation: Chicago, IL 60601\nCurrent Title: Head of Analytics",
+        "narrative.md": "Positioning: Analytics leader. Target: VP/Director roles in financial services.",
+        "jd.md": "Role: VP of Analytics. Requirements: 12+ years analytics, team leadership, SQL, Python, executive reporting.",
+        "materials.md": "# Resume\n[resume content]"
+      },
+      "user_responses": {
+        "work_authorization": "US Citizen",
+        "visa_sponsorship": "No",
+        "salary_expectations": "$200K–$240K total comp",
+        "how_did_you_hear": "LinkedIn",
+        "willing_to_relocate": "Yes",
+        "available_start_date": "30 days",
+        "short_answer_questions": "none"
+      },
+      "expected_output": "Standard fields answered without system-specific guidance (no ATS system specified). Skill prompts user to ask about work authorization since it was not in profile.md. All standard fields labeled clearly.",
+      "assertions": [
+        "No system-specific ATS guidance included (no workday/greenhouse/lever reference doc loaded)",
+        "Skill asks user about work authorization (not present in profile.md) or uses user-provided response",
+        "All 8 standard fields addressed with clear labels",
+        "Output is printed for copy-paste, no file written",
+        "Reminder to user to review answers and update salary based on market research"
+      ]
+    }
+  ]
+}
