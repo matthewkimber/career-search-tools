@@ -1,6 +1,6 @@
 ---
 name: add-position
-description: Add a specific job position you're targeting at a company. Paste in the job description. Usage: /add-position <company> <role>
+description: "Add a specific job position you're targeting at a company. Paste in the job description. Usage: /add-position <company> <role>"
 ---
 
 The user wants to add a position they're targeting. Arguments: company name, role title.

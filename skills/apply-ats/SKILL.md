@@ -1,6 +1,6 @@
 ---
 name: apply-ats
-description: Generate pre-written answers for ATS application fields tailored to the specific role. Usage: /apply-ats <company> <role> [workday|greenhouse|lever]
+description: "Generate pre-written answers for ATS application fields tailored to the specific role. Usage: /apply-ats <company> <role> [workday|greenhouse|lever]"
 ---
 
 Read:

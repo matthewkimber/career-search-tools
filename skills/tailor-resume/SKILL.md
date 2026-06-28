@@ -1,6 +1,6 @@
 ---
 name: tailor-resume
-description: Generate an ATS-optimized resume tailored to a specific job. Reads your profile and the job description, selects a template, mirrors JD keywords, and runs a keyword gap analysis. Usage: /tailor-resume <company> <role> [template]
+description: "Generate an ATS-optimized resume tailored to a specific job. Reads your profile and the job description, selects a template, mirrors JD keywords, and runs a keyword gap analysis. Usage: /tailor-resume <company> <role> [template]"
 ---
 
 Read these files:

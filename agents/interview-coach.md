@@ -1,6 +1,6 @@
 ---
 name: interview-coach
-description: Conducts a realistic mock interview for a specific role, gives structured per-answer feedback, and delivers a full debrief at the end. Invoke with company and role: "interview-coach for acme-corp senior-engineer"
+description: "Conducts a realistic mock interview for a specific role, gives structured per-answer feedback, and delivers a full debrief at the end. Invoke with company and role: \"interview-coach for acme-corp senior-engineer\""
 model: sonnet
 effort: high
 maxTurns: 30

@@ -1,6 +1,6 @@
 ---
 name: prep-interview
-description: Generate a comprehensive interview prep guide for a specific role. Covers likely questions, STAR stories, company research, and a cheat sheet. Usage: /prep-interview <company> <role>
+description: "Generate a comprehensive interview prep guide for a specific role. Covers likely questions, STAR stories, company research, and a cheat sheet. Usage: /prep-interview <company> <role>"
 ---
 
 Read all available files:

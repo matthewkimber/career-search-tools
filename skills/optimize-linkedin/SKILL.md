@@ -1,6 +1,6 @@
 ---
 name: optimize-linkedin
-description: Generate optimized LinkedIn profile copy from your profile and narrative. Produces ready-to-paste copy for every section. Usage: /optimize-linkedin
+description: "Generate optimized LinkedIn profile copy from your profile and narrative. Produces ready-to-paste copy for every section. Usage: /optimize-linkedin"
 ---
 
 Read:

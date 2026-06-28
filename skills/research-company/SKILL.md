@@ -1,6 +1,6 @@
 ---
 name: research-company
-description: Research a target company and create a structured company profile. Run before add-position or find-hiring-team. Usage: /research-company <company-name>
+description: "Research a target company and create a structured company profile. Run before add-position or find-hiring-team. Usage: /research-company <company-name>"
 ---
 
 The user wants to research a company for their job search. The company name is provided as an argument.

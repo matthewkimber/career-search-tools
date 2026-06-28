@@ -1,6 +1,6 @@
 ---
 name: post-interview
-description: Generate personalized thank-you notes for each interviewer and log a structured debrief. Run within 24 hours of an interview. Usage: /post-interview <company> <role>
+description: "Generate personalized thank-you notes for each interviewer and log a structured debrief. Run within 24 hours of an interview. Usage: /post-interview <company> <role>"
 ---
 
 Read:

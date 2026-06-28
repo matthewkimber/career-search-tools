@@ -1,6 +1,6 @@
 ---
 name: find-hiring-team
-description: Research and document the hiring team for a specific position. Guides you to find the hiring manager, likely panel, and key contacts. Usage: /find-hiring-team <company> <role>
+description: "Research and document the hiring team for a specific position. Guides you to find the hiring manager, likely panel, and key contacts. Usage: /find-hiring-team <company> <role>"
 ---
 
 Read the following files:

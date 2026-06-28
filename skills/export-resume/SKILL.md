@@ -1,6 +1,6 @@
 ---
 name: export-resume
-description: Export your tailored resume to DOCX (default), JSON Resume v1.0.0, or PDF. Requires Pandoc for DOCX/PDF. Usage: /export-resume <company> <role> [docx|json|pdf]
+description: "Export your tailored resume to DOCX (default), JSON Resume v1.0.0, or PDF. Requires Pandoc for DOCX/PDF. Usage: /export-resume <company> <role> [docx|json|pdf]"
 ---
 
 Read:

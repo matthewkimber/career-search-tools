@@ -1,6 +1,6 @@
 ---
 name: analyze-offer
-description: Evaluate a job offer with total comp breakdown, market benchmarking guidance, comparison framework, and negotiation positioning. Usage: /analyze-offer <company> <role>
+description: "Evaluate a job offer with total comp breakdown, market benchmarking guidance, comparison framework, and negotiation positioning. Usage: /analyze-offer <company> <role>"
 ---
 
 Read:

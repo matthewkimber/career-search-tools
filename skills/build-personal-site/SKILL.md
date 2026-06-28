@@ -1,6 +1,6 @@
 ---
 name: build-personal-site
-description: Generate copy for a personal/portfolio website organized by page and section. Drop directly into any site builder (Notion, Framer, GitHub Pages, etc.). Usage: /build-personal-site
+description: "Generate copy for a personal/portfolio website organized by page and section. Drop directly into any site builder (Notion, Framer, GitHub Pages, etc.). Usage: /build-personal-site"
 ---
 
 Read:
