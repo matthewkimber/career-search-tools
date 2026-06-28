@@ -8,6 +8,7 @@ Read:
 - ${CLAUDE_PROJECT_DIR}/job-search/profile/narrative.md
 - ${CLAUDE_PROJECT_DIR}/job-search/companies/<company-slug>/positions/<role-slug>/jd.md
 - ${CLAUDE_PROJECT_DIR}/job-search/companies/<company-slug>/positions/<role-slug>/materials.md
+- ${CLAUDE_PROJECT_DIR}/job-search/companies/<company-slug>/research.md (if exists — provides company context for short-answer questions)
 
 If a system argument was provided, also read:
 ${CLAUDE_PLUGIN_ROOT}/skills/apply-ats/ats-fields/<system>.md
