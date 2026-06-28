@@ -1,0 +1,57 @@
+{
+  "version": "1.0.0",
+  "skill_name": "build-personal-site",
+  "tests": [
+    {
+      "id": "build-personal-site-001",
+      "prompt": "/build-personal-site",
+      "context": {
+        "profile.md": "Name: Jane Smith\nWork Experience:\n- Senior Analyst at DataCo (Jan 2020 – Present): ETL pipelines, 40% query improvement\n- Analyst at StartupX (Mar 2018 – Dec 2019): BI dashboards\nProjects:\n- OpenPipeline: Open-source ETL framework, Python, 500 GitHub stars\nSkills: Python, SQL, Spark, data modeling",
+        "narrative.md": "Positioning: Data engineer bridging analytics and engineering\nTarget Roles: Senior Data Engineer\nWhat I'm looking for: High-growth B2B SaaS companies building data infrastructure"
+      },
+      "expected_output": "personal-site-draft.md created with all 6 page sections: Home/Hero, About, Work/Experience, Projects, Skills, Contact. Each section is independently copyable.",
+      "assertions": [
+        "personal-site-draft.md is created at job-search/profile/personal-site-draft.md",
+        "Home/Hero section present with headline (8 words max), subheadline (20 words max), and short bio (50 words)",
+        "About page has long bio (150–200 words), By the numbers block, and What I'm looking for",
+        "Work/Experience page covers each role with narrative description",
+        "Projects page includes OpenPipeline with stack and outcome",
+        "Skills page groups skills with one per line (not comma-separated)",
+        "Contact page has friendly invitation and what user is open to",
+        "User told where file was saved",
+        "Skill first asks about existing platform before generating"
+      ]
+    },
+    {
+      "id": "build-personal-site-002",
+      "prompt": "/build-personal-site (user responds: Framer)",
+      "context": {
+        "profile.md": "Name: Alex Rivera\nWork Experience:\n- Software Engineer at MegaCo (Jan 2021 – Present): Microservices, 10M req/day\nSkills: Go, Kubernetes, PostgreSQL, distributed systems",
+        "narrative.md": "Positioning: Backend engineer building for scale\nTarget: Startup engineering roles"
+      },
+      "expected_output": "personal-site-draft.md created with copy formatted with Framer in mind (component-friendly sections, clear copy blocks). All 6 pages present.",
+      "assertions": [
+        "Skill asked about platform and user responded Framer",
+        "Copy formatted to be drop-in friendly for Framer component structure",
+        "personal-site-draft.md created at correct path",
+        "All 6 page sections present"
+      ]
+    },
+    {
+      "id": "build-personal-site-003",
+      "prompt": "/build-personal-site",
+      "context": {
+        "profile.md": "Name: Michael Chen\nWork Experience:\n- CTO at ScaleCo (Jan 2018 – Present): 80-person eng org, $50M ARR\n- VP Engineering at GrowthCo (Jan 2015 – Dec 2017): 40 engineers\nSkills: engineering leadership, cloud architecture, technical strategy",
+        "narrative.md": "Positioning: Engineering executive who scales organizations\nWhat I'm looking for: CTO roles at Series C+ companies"
+      },
+      "expected_output": "Personal site copy emphasizes leadership and org scale rather than individual technical contributions. By the numbers block surfaces team sizes and ARR, not code metrics.",
+      "assertions": [
+        "Hero headline emphasizes leadership impact, not technical skills",
+        "By the numbers includes '80-person engineering org' or '$50M ARR'",
+        "Work page descriptions are narrative (not bullet-list style)",
+        "Contact page What I'm looking for references CTO and Series C+",
+        "personal-site-draft.md created at correct path"
+      ]
+    }
+  ]
+}

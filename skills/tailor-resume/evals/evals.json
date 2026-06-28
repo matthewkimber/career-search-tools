@@ -1,0 +1,75 @@
+{
+  "version": "1.0.0",
+  "skill_name": "tailor-resume",
+  "tests": [
+    {
+      "id": "tailor-resume-001",
+      "prompt": "/tailor-resume acme-corp senior-engineer",
+      "context": {
+        "profile.md": "Name: Jane Smith\nEmail: jane@example.com\nSkills: Python, SQL, team leadership\nWork Experience:\n- Senior Analyst at DataCo (Jan 2020 – Present): Built ETL pipelines, reduced query time 40%\n- Analyst at StartupX (Mar 2018 – Dec 2019): Delivered dashboards for 5 product teams",
+        "narrative.md": "preferred_template: tech\nPositioning: Data engineer who bridges analytics and engineering",
+        "jd.md": "Role: Senior Data Engineer\nMust-Have Skills: Python, SQL, stakeholder management\nKeywords for ATS: ETL pipelines, data modeling, stakeholder management, Python, SQL, CI/CD"
+      },
+      "expected_output": "A tailored resume appended to materials.md using the tech template, with ATS Keyword Analysis block showing coverage count and any missing keywords listed with suggested placements.",
+      "assertions": [
+        "materials.md is created or appended with a resume section",
+        "Resume uses 'Technical Skills' section heading (tech template)",
+        "ATS Keyword Analysis block appears with 'Coverage: X of Y keywords present'",
+        "Output tells user to run /export-resume and /write-cover-letter",
+        "narrative.md preferred_template remains 'tech' (already set)",
+        "No em-dashes in bullet text",
+        "Dates use 'Mon YYYY' format with en-dash separator"
+      ]
+    },
+    {
+      "id": "tailor-resume-002",
+      "prompt": "/tailor-resume bigbank vp-analytics classic",
+      "context": {
+        "profile.md": "Name: John Doe\nEmail: john@example.com\nWork Experience:\n- Head of Analytics at FinCo (Jun 2019 – Present): Led 12-person team, $2M budget, 35% revenue growth\n- Director, Data at BankCo (Jan 2016 – May 2019): Built enterprise BI platform",
+        "narrative.md": "Positioning: Analytics leader who drives revenue through data strategy",
+        "jd.md": "Role: VP of Analytics\nMust-Have Skills: leadership, stakeholder management, P&L ownership\nKeywords for ATS: team leadership, P&L ownership, stakeholder management, executive reporting, data strategy"
+      },
+      "expected_output": "A resume using the classic template structure with Work Experience section (not 'Professional Experience'), keyword gap analysis included.",
+      "assertions": [
+        "Resume section heading is 'Work Experience' (approved heading, classic template)",
+        "ATS Keyword Analysis block present",
+        "preferred_template set to 'classic' in narrative.md",
+        "materials.md appended under bigbank/vp-analytics/",
+        "Summary section present and references VP-level scope"
+      ]
+    },
+    {
+      "id": "tailor-resume-003",
+      "prompt": "/tailor-resume acme-corp product-manager",
+      "context": {
+        "profile.md": "Name: Sara Lee\nEmail: sara@example.com\nWork Experience:\n- PM at TechCo (Mar 2021 – Present): Shipped 3 products, $10M ARR\n- APM at StartupY (Jan 2019 – Feb 2021): Managed roadmap for B2B SaaS",
+        "narrative.md": "",
+        "jd.md": "Role: Senior Product Manager\nMust-Have Skills: roadmap planning, cross-functional leadership\nKeywords for ATS: roadmap planning, OKRs, cross-functional leadership, go-to-market, stakeholder alignment"
+      },
+      "expected_output": "Skill asks the user to choose a template since preferred_template is not set in narrative.md, then proceeds once user selects one. Saves selection to narrative.md.",
+      "assertions": [
+        "Skill prompts user to choose: classic, modern, executive, or tech",
+        "After selection, preferred_template is written to narrative.md",
+        "Resume is generated and appended to materials.md",
+        "ATS compliance checklist shows all items checked"
+      ]
+    },
+    {
+      "id": "tailor-resume-004",
+      "prompt": "/tailor-resume globalcorp cto executive",
+      "context": {
+        "profile.md": "Name: Michael Chen\nEmail: m@example.com\nWork Experience:\n- CTO at ScaleCo (Jan 2018 – Present): 80-person engineering org, $50M ARR, led cloud migration\n- VP Engineering at GrowthCo (Jan 2015 – Dec 2017): 40 engineers, rebuilt core platform",
+        "narrative.md": "preferred_template: modern",
+        "jd.md": "Role: Chief Technology Officer\nMust-Have Skills: engineering leadership, cloud architecture, board communication\nKeywords for ATS: engineering leadership, cloud architecture, board communication, technical strategy, P&L"
+      },
+      "expected_output": "Template argument 'executive' overrides preferred_template 'modern' from narrative.md. Resume uses executive template structure with Scope line and Core Competencies section.",
+      "assertions": [
+        "Executive template used despite narrative.md having preferred_template: modern",
+        "preferred_template updated to 'executive' in narrative.md",
+        "Resume contains 'Core Competencies' section",
+        "Each role has a 'Scope:' line with team/budget context",
+        "ATS Keyword Analysis block present"
+      ]
+    }
+  ]
+}

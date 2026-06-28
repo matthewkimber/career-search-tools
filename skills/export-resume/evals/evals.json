@@ -1,0 +1,72 @@
+{
+  "version": "1.0.0",
+  "skill_name": "export-resume",
+  "tests": [
+    {
+      "id": "export-resume-001",
+      "prompt": "/export-resume acme-corp senior-engineer",
+      "context": {
+        "materials.md": "---\n# Resume — Senior Engineer at Acme Corp\n# Template: tech\n# Generated: 2026-06-27\n---\n\nJane Smith\njane@example.com | 555-0100\n\n## Summary\nData engineer with 6 years experience.\n\n## Work Experience\n\n### Senior Analyst — DataCo\n*Jan 2020 – Present*\n- Built ETL pipelines reducing query time 40%\n\n---\n## ATS Keyword Analysis\nCoverage: 5 of 6 keywords present",
+        "narrative.md": "preferred_template: tech"
+      },
+      "expected_output": "Pandoc not available; skill prints install instructions and does not create resume.docx.",
+      "assertions": [
+        "Skill detects pandoc is missing",
+        "Prints install instructions for macOS (brew install pandoc), Windows (winget install pandoc), and Linux (sudo apt install pandoc)",
+        "Does not create resume.docx",
+        "Does not leave a resume-temp.md file behind"
+      ]
+    },
+    {
+      "id": "export-resume-002",
+      "prompt": "/export-resume acme-corp senior-engineer json",
+      "context": {
+        "materials.md": "---\n# Resume — Senior Engineer at Acme Corp\n# Template: tech\n# Generated: 2026-06-27\n---\n\nJane Smith\njane@example.com | 555-0100 | San Francisco, CA\n\n## Summary\nData engineer with 6 years building ETL pipelines.\n\n## Work Experience\n\n### Senior Analyst — DataCo\n*Jan 2020 – Present*\n- Built ETL pipelines reducing query time 40%\n\n## Education\nB.S. Computer Science — State University, 2018\n\n## Skills\nPython, SQL, Spark, Kubernetes",
+        "profile.md": "Name: Jane Smith\nEmail: jane@example.com"
+      },
+      "expected_output": "A valid JSON Resume v1.0.0 file written to resume.json with basics, work, education, and skills sections populated.",
+      "assertions": [
+        "resume.json is created at the correct path",
+        "JSON is valid (parseable)",
+        "basics.name equals 'Jane Smith'",
+        "basics.email equals 'jane@example.com'",
+        "work array has at least one entry with name, position, startDate, and highlights",
+        "education array has at least one entry",
+        "skills array is present",
+        "User told to use resume-cli"
+      ]
+    },
+    {
+      "id": "export-resume-003",
+      "prompt": "/export-resume acme-corp senior-engineer pdf",
+      "context": {
+        "materials.md": "---\n# Resume — Senior Engineer at Acme Corp\n# Template: tech\n# Generated: 2026-06-27\n---\n\nJane Smith\n\n## Summary\nData engineer.",
+        "narrative.md": "preferred_template: tech"
+      },
+      "expected_output": "When no PDF engine (pdflatex, wkhtmltopdf, weasyprint) is installed, prints fallback message directing user to convert resume.docx in Word.",
+      "assertions": [
+        "Checks for pdflatex, wkhtmltopdf, and weasyprint",
+        "When none found, prints fallback options",
+        "Mentions 'File → Export as PDF' Word option",
+        "Mentions wkhtmltopdf install command as an alternative",
+        "Does not create resume.pdf"
+      ]
+    },
+    {
+      "id": "export-resume-004",
+      "prompt": "/export-resume acme-corp senior-engineer",
+      "context": {
+        "materials.md": "---\n# Resume — Senior Engineer at Acme Corp\n# Template: modern\n# Generated: 2026-06-27\n---\n\nJane Smith\njane@example.com\n\n## Summary\nProduct engineer.\n\n---\n## ATS Keyword Analysis\nCoverage: 4 of 5 keywords",
+        "narrative.md": "preferred_template: modern"
+      },
+      "expected_output": "When pandoc IS available, uses modern-reference.docx and creates resume.docx at the correct path. Temp file is cleaned up after export.",
+      "assertions": [
+        "Reads preferred_template 'modern' from narrative.md",
+        "Pandoc command uses modern-reference.docx",
+        "resume.docx is created at job-search/companies/acme-corp/positions/senior-engineer/resume.docx",
+        "resume-temp.md is deleted after successful conversion",
+        "User told to open in Word to review formatting"
+      ]
+    }
+  ]
+}
