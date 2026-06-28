@@ -107,7 +107,12 @@ def build_system_prompt(skill_md: str) -> str:
 
 
 def run_test(client: Any, system_prompt: str, test: dict, model: str) -> dict:
-    """Send the test prompt to the API and return the response text plus token count."""
+    """Send the test prompt to the API and return the response text plus token count.
+
+    On API error, returns a dict with an "error" key instead of crashing.
+    """
+    import anthropic as _anthropic  # noqa: PLC0415 — already installed or get_anthropic_client() would have exited
+
     prompt = test.get("prompt", "")
 
     # If the test supplies context files, prepend them to the prompt.
@@ -120,12 +125,16 @@ def run_test(client: Any, system_prompt: str, test: dict, model: str) -> dict:
 
     start_ms = int(time.time() * 1000)
 
-    response = client.messages.create(
-        model=model,
-        max_tokens=4096,
-        system=system_prompt,
-        messages=[{"role": "user", "content": prompt}],
-    )
+    try:
+        response = client.messages.create(
+            model=model,
+            max_tokens=4096,
+            system=system_prompt,
+            messages=[{"role": "user", "content": prompt}],
+        )
+    except _anthropic.APIError as e:
+        print(f"WARNING: API error running test: {e}", file=sys.stderr)
+        return {"error": str(e), "output": "", "total_tokens": 0, "duration_ms": int(time.time() * 1000) - start_ms}
 
     duration_ms = int(time.time() * 1000) - start_ms
     output_text = response.content[0].text if response.content else ""
@@ -142,7 +151,10 @@ def grade_assertion(client: Any, assertion: str, output: str, model: str) -> dic
     """Ask the LLM judge whether the output satisfies the assertion.
 
     Returns {"passed": bool, "evidence": str}.
+    On API error, returns a FAIL result with the error message as evidence.
     """
+    import anthropic as _anthropic  # noqa: PLC0415 — already installed or get_anthropic_client() would have exited
+
     judge_prompt = (
         f"You are grading an AI assistant's output. "
         f"Assertion: '{assertion}'. "
@@ -150,11 +162,15 @@ def grade_assertion(client: Any, assertion: str, output: str, model: str) -> dic
         "Reply with exactly: PASS: <evidence> or FAIL: <evidence>"
     )
 
-    response = client.messages.create(
-        model=model,
-        max_tokens=512,
-        messages=[{"role": "user", "content": judge_prompt}],
-    )
+    try:
+        response = client.messages.create(
+            model=model,
+            max_tokens=512,
+            messages=[{"role": "user", "content": judge_prompt}],
+        )
+    except _anthropic.APIError as e:
+        print(f"WARNING: Grading API error: {e}", file=sys.stderr)
+        return {"passed": False, "evidence": f"Grading API error: {e}"}
 
     verdict_text = response.content[0].text.strip() if response.content else "FAIL: no response"
 
@@ -194,29 +210,46 @@ def run_skill_evals(
 
         # Run the test
         result = run_test(client, system_prompt, test, model)
-        output = result["output"]
-        total_tokens = result["total_tokens"]
-        duration_ms = result["duration_ms"]
-
+        total_tokens = result.get("total_tokens", 0)
+        duration_ms = result.get("duration_ms", 0)
         total_tokens_all += total_tokens
 
         # Grade each assertion
         assertion_results = []
-        for assertion in assertions:
-            grade = grade_assertion(client, assertion, output, model)
-            assertion_results.append({
-                "text": assertion,
-                "passed": grade["passed"],
-                "evidence": grade["evidence"],
-            })
-            if grade["passed"]:
-                total_passed += 1
-            else:
+        if "error" in result:
+            # API call failed — mark every assertion as failed with the error as evidence.
+            api_error_msg = f"API error: {result['error']}"
+            for assertion in assertions:
+                assertion_results.append({
+                    "text": assertion,
+                    "passed": False,
+                    "evidence": api_error_msg,
+                })
                 total_failed += 1
+        else:
+            output = result["output"]
+            for assertion in assertions:
+                grade = grade_assertion(client, assertion, output, model)
+                assertion_results.append({
+                    "text": assertion,
+                    "passed": grade["passed"],
+                    "evidence": grade["evidence"],
+                })
+                if grade["passed"]:
+                    total_passed += 1
+                else:
+                    total_failed += 1
 
         n_pass = sum(1 for r in assertion_results if r["passed"])
         n_fail = len(assertion_results) - n_pass
-        pass_rate = n_pass / len(assertion_results) if assertion_results else 1.0
+        if not assertion_results:
+            print(
+                f"WARNING: eval '{test_id}' in skill '{name}' has no assertions — skipping",
+                file=sys.stderr,
+            )
+            pass_rate = 0.0
+        else:
+            pass_rate = n_pass / len(assertion_results)
 
         grading_data = {
             "assertion_results": assertion_results,
