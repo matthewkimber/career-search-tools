@@ -1,0 +1,47 @@
+{
+  "skill_name": "add-position",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "/add-position Stripe senior-backend-engineer",
+      "expected_output": "Skill creates the directory job-search/companies/stripe/positions/senior-backend-engineer/, prompts the user to paste the full job description and provide the posting URL, then writes jd.md with the full JD verbatim plus extracted Must-Have Skills, Nice-to-Have Skills, Key Responsibilities (5–7 bullets), and Keywords for ATS. Also writes tracking.md initialized with 'Researching' status and today's date in the Timeline. Placeholder files team.md, materials.md, and outreach.md are created.",
+      "assertions": [
+        "job-search/companies/stripe/positions/senior-backend-engineer/ directory is created",
+        "job-search/companies/stripe/positions/senior-backend-engineer/jd.md is created",
+        "jd.md contains '# Job Description: Senior Backend Engineer at Stripe' as heading",
+        "jd.md contains a 'Must-Have Skills' section",
+        "jd.md contains a 'Keywords for ATS' section",
+        "jd.md contains the full JD text verbatim under 'Full Job Description'",
+        "job-search/companies/stripe/positions/senior-backend-engineer/tracking.md is created",
+        "tracking.md contains 'Current Stage: Researching'",
+        "tracking.md contains today's date in the Timeline table",
+        "team.md, materials.md, and outreach.md placeholder files are created",
+        "Completion message mentions /find-hiring-team as next step"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "add position at Acme Corp for Product Manager role",
+      "expected_output": "Skill handles natural language input, converts 'Acme Corp' to 'acme-corp' and 'Product Manager' to 'product-manager' as slugs, creates the position directory, asks for the JD paste, and produces jd.md with all required sections correctly labeled for a Product Manager role.",
+      "assertions": [
+        "job-search/companies/acme-corp/positions/product-manager/ directory is created",
+        "job-search/companies/acme-corp/positions/product-manager/jd.md is created",
+        "jd.md heading contains 'Product Manager' and 'Acme Corp'",
+        "jd.md contains 'Keywords for ATS' section",
+        "tracking.md is created with 'Current Stage: Researching'"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "/add-position OpenAI staff-engineer",
+      "expected_output": "When user pastes a JD with a mix of required and preferred qualifications, the skill correctly separates them into Must-Have Skills vs Nice-to-Have Skills, extracts 5–7 Key Responsibilities, and builds a comprehensive Keywords for ATS list from all technical terms in the JD. Tracking.md is initialized and all placeholder files are present.",
+      "assertions": [
+        "jd.md Must-Have Skills and Nice-to-Have Skills are in separate sections",
+        "jd.md Key Responsibilities contains 5 to 7 bullet points",
+        "jd.md Keywords for ATS is a comma-separated list of technical terms",
+        "tracking.md Timeline table contains exactly one row with today's date and 'Position added'",
+        "Completion message mentions both /find-hiring-team and /tailor-resume as next steps"
+      ]
+    }
+  ]
+}
