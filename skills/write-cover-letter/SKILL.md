@@ -1,6 +1,6 @@
 ---
 name: write-cover-letter
-description: Write a tailored cover letter for a specific position using your profile and company research. Usage: /write-cover-letter <company> <role>
+description: "Write a tailored cover letter for a specific position using your profile and company research. Usage: /write-cover-letter <company> <role>"
 ---
 
 Read:

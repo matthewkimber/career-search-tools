@@ -1,6 +1,6 @@
 ---
 name: pipeline
-description: Generate a status dashboard of all active job search opportunities across companies and roles. Updates pipeline.md. Usage: /pipeline
+description: "Generate a status dashboard of all active job search opportunities across companies and roles. Updates pipeline.md. Usage: /pipeline"
 ---
 
 Use the Bash tool to find all tracking files:

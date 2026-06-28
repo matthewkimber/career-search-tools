@@ -1,6 +1,6 @@
 ---
 name: setup-profile
-description: First-time job search profile setup. Run this before any other skill. Creates your professional profile, positioning narrative, and references template in job-search/profile/.
+description: "First-time job search profile setup. Run this before any other skill. Creates your professional profile, positioning narrative, and references template in job-search/profile/."
 ---
 
 You are helping the user set up their job search profile. Work through the following two phases in order. If job-search/ already exists, ask the user whether they want to update Phase 1, Phase 2, or both.

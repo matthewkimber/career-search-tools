@@ -1,6 +1,6 @@
 ---
 name: outreach
-description: Draft cold or warm outreach messages to a recruiter, hiring manager, or connection. Generates multiple variants. Usage: /outreach <person> <company> <role>
+description: "Draft cold or warm outreach messages to a recruiter, hiring manager, or connection. Generates multiple variants. Usage: /outreach <person> <company> <role>"
 ---
 
 Arguments: person name or description, company, role.
