@@ -1,0 +1,80 @@
+{
+  "version": "1.0.0",
+  "skill_name": "pipeline",
+  "tests": [
+    {
+      "id": "pipeline-001",
+      "prompt": "/pipeline",
+      "context": {
+        "job-search/companies/acme-corp/positions/senior-engineer/tracking.md": "# Acme Corp — Senior Engineer\nStatus: Applied\nLast Updated: 2026-06-20\nApplied: 2026-06-20\n\n## Notes\nFollow up by: 2026-07-04",
+        "job-search/companies/techgiant/positions/staff-engineer/tracking.md": "# TechGiant — Staff Engineer\nStatus: Interviewing\nLast Updated: 2026-06-25\n\n## Timeline\n- 2026-06-25: Technical screen scheduled for 2026-07-01",
+        "job-search/companies/startupco/positions/backend-engineer/tracking.md": "# StartupCo — Backend Engineer\nStatus: Researching\nLast Updated: 2026-06-22\n\n## Notes\nAdded for research. No contact yet."
+      },
+      "expected_output": "pipeline.md written with today's date. Acme Corp / Senior Engineer appears in the Applied table with follow-up date 2026-07-04. TechGiant / Staff Engineer appears in the Interviewing table. StartupCo / Backend Engineer appears in the Researching table. Summary shows Total active: 3, In interview stage: 1, Offers pending: 0. Recommended Actions section present.",
+      "assertions": [
+        "pipeline.md is written to job-search/pipeline.md",
+        "pipeline.md contains today's date in the Last Updated line",
+        "Acme Corp / senior-engineer appears in the Applied section",
+        "TechGiant / staff-engineer appears in the Interviewing section",
+        "StartupCo / backend-engineer appears in the Researching section",
+        "Summary shows Total active: 3",
+        "Summary shows In interview stage: 1",
+        "Summary shows Offers pending: 0",
+        "Recommended Actions section is present",
+        "Follow-up date 2026-07-04 appears for Acme Corp in Applied table"
+      ]
+    },
+    {
+      "id": "pipeline-002",
+      "prompt": "/pipeline",
+      "context": {
+        "job-search/companies/fintech-co/positions/principal-engineer/tracking.md": "# FinTechCo — Principal Engineer\nStatus: Offer\nLast Updated: 2026-06-26\n\n## Offer Details\nBase: $200k, Deadline: 2026-07-03",
+        "job-search/companies/healthtech/positions/ml-lead/tracking.md": "# HealthTech — ML Lead\nStatus: Offer\nLast Updated: 2026-06-25\n\n## Offer Details\nBase: $185k, Deadline: 2026-07-05",
+        "job-search/companies/legacy-corp/positions/architect/tracking.md": "# LegacyCorp — Architect\nStatus: Closed / Declined\nLast Updated: 2026-06-15\n\n## Notes\nDeclined — compensation too low."
+      },
+      "expected_output": "pipeline.md written with two offers in the Offer table (fintech-co / principal-engineer with deadline 2026-07-03, healthtech / ml-lead with deadline 2026-07-05) and one entry in the Closed/Declined table (legacy-corp / architect). Summary shows Offers pending: 2. Recommended Actions flags the upcoming offer deadlines.",
+      "assertions": [
+        "pipeline.md is written to job-search/pipeline.md",
+        "fintech-co / principal-engineer appears in the Offer section",
+        "healthtech / ml-lead appears in the Offer section",
+        "legacy-corp / architect appears in the Closed / Declined section",
+        "Summary shows Offers pending: 2",
+        "Summary shows Total active: 2 (Closed/Declined not counted as active)",
+        "Recommended Actions mentions the upcoming offer deadlines or urges decision by deadline date",
+        "Closed / Declined table shows the outcome or reason for legacy-corp"
+      ]
+    },
+    {
+      "id": "pipeline-003",
+      "prompt": "/pipeline",
+      "context": {
+        "job-search/companies/openai/positions/ml-engineer/tracking.md": "# OpenAI — ML Engineer\nStatus: Outreach Sent\nLast Updated: 2026-06-18\n\n## Outreach Log\n- 2026-06-18: Sent LinkedIn message to Priya Nair (recruiter). No response yet."
+      },
+      "expected_output": "pipeline.md written with one entry: openai / ml-engineer in the Outreach Sent table. All other stage tables are present but empty (no rows). Summary shows Total active: 1, In interview stage: 0, Offers pending: 0. Recommended Actions notes no response has been received and may suggest following up.",
+      "assertions": [
+        "pipeline.md is written to job-search/pipeline.md",
+        "openai / ml-engineer appears in the Outreach Sent section",
+        "Outreach Sent row includes contact name Priya Nair or the date 2026-06-18",
+        "All six stage sections (Researching, Applied, Outreach Sent, Interviewing, Offer, Closed / Declined) are present in the output",
+        "Researching, Applied, Interviewing, Offer, Closed / Declined tables are empty or have no data rows",
+        "Summary shows Total active: 1",
+        "Summary shows Offers pending: 0",
+        "Completion message tells the user to run /pipeline weekly"
+      ]
+    },
+    {
+      "id": "pipeline-004",
+      "prompt": "/pipeline",
+      "context": {},
+      "expected_output": "No tracking.md files found. pipeline.md is still written with today's date, all stage tables present but empty, Summary showing Total active: 0. A message tells the user there are no active opportunities and suggests running /research-company or /add-position to get started.",
+      "assertions": [
+        "pipeline.md is written to job-search/pipeline.md",
+        "All six stage section headers are present",
+        "Summary shows Total active: 0",
+        "Summary shows Offers pending: 0",
+        "User is informed there are no active opportunities",
+        "Completion message suggests a next step such as /research-company or /add-position"
+      ]
+    }
+  ]
+}
