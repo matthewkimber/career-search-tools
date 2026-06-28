@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'PIPELINE=\"${CLAUDE_PROJECT_DIR}/job-search/pipeline.md\"; if [ -f \"$PIPELINE\" ]; then echo \"--- Job Search Pipeline ---\"; grep -E \"^- Total active:|^- In interview|^- Offers pending\" \"$PIPELINE\" 2>/dev/null || head -20 \"$PIPELINE\"; echo \"---------------------------\"; fi'"
+          }
+        ]
+      }
+    ]
+  }
+}
