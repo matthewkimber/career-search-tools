@@ -1,0 +1,144 @@
+{
+  "version": "1.0.0",
+  "skill_name": "analyze-offer",
+  "tests": [
+    {
+      "id": "analyze-offer-001",
+      "prompt": "/analyze-offer acme-corp senior-engineer",
+      "context": {
+        "research.md": "# Company Research: Acme Corp\nStage: Series C. ~300 employees. Product: AcmeData analytics platform. No liquidity event yet — private company.",
+        "jd.md": "# Senior Engineer — Acme Corp\nRole: Backend engineer on the data platform team. IC5 level equivalent.",
+        "tracking.md": "# Acme Corp — Senior Engineer\nStatus: Interviewing\nLast Updated: 2026-06-27"
+      },
+      "user_responses": {
+        "base": "$180,000",
+        "bonus": "10% target, performance-based",
+        "equity": "RSUs, $500k grant, 4-year vest with 1-year cliff. No 409A provided — private company.",
+        "benefits": "Health insurance: employee pays $150/month. 401k match: 4% up to IRS limit. No HSA.",
+        "pto": "20 days PTO + federal holidays",
+        "remote_policy": "Hybrid — 2 days/week in office (NYC)",
+        "start_date": "$20,000 signing bonus, start date 2026-08-01",
+        "other_offers": "No other offers at this time."
+      },
+      "expected_output": "Total comp breakdown: Base $180k, Bonus $18k (10% target, at-risk), Equity annualized $125k ($500k ÷ 4 years — flagged as estimated because no 409A), Benefits ~$X estimated, Total estimated annual comp ~$323k+ range. Private company equity caveat flagged. Market benchmarking guidance lists Levels.fyi, Glassdoor, LinkedIn, Payscale, and network check. No comparison table (single offer). Negotiation positioning identifies base, signing bonus, and equity as levers. tracking.md updated with Offer Analysis section and Status: Offer Received.",
+      "assertions": [
+        "Base salary shown as $180,000",
+        "Bonus shown as $18,000 or 10% of $180k, labeled performance-based or at-risk",
+        "Equity annualized to approximately $125,000 ($500k ÷ 4 years)",
+        "Caveat present that equity value is uncertain because company is private and no 409A was provided",
+        "Total estimated annual comp figure is calculated and displayed",
+        "Market benchmarking guidance includes Levels.fyi",
+        "Market benchmarking guidance includes Glassdoor",
+        "Market benchmarking guidance includes LinkedIn Salary Insights",
+        "Negotiation section identifies base salary and signing bonus as negotiable levers",
+        "Negotiation section includes suggested script ('I was expecting something closer to $X')",
+        "Negotiation section says not to accept on the spot",
+        "Signing bonus of $20,000 is noted in the output",
+        "Section appended to tracking.md under '## Offer Analysis'",
+        "Status in tracking.md updated to 'Offer Received'"
+      ]
+    },
+    {
+      "id": "analyze-offer-002",
+      "prompt": "/analyze-offer techgiant staff-engineer",
+      "context": {
+        "research.md": "# Company Research: TechGiant\nPublic company (NYSE: TG). 50,000 employees. Market cap ~$80B.",
+        "jd.md": "# Staff Engineer — TechGiant\nRole: Staff-level IC on the platform team. L6 equivalent.",
+        "tracking.md": "# TechGiant — Staff Engineer\nStatus: Interviewing — Final Round\nLast Updated: 2026-06-26"
+      },
+      "user_responses": {
+        "base": "$240,000",
+        "bonus": "15% target, performance-based",
+        "equity": "RSUs, $800k grant, 4-year vest with quarterly releases after cliff. Current stock price $55/share, 3,636 RSUs.",
+        "benefits": "Health insurance: $0 employee cost (fully covered). 401k match: 6% up to IRS limit. HSA: $1,500/year employer contribution.",
+        "pto": "Unlimited PTO — average employee takes 15 days",
+        "remote_policy": "Fully remote",
+        "start_date": "No signing bonus. Start date flexible.",
+        "other_offers": "Yes — I have an offer from acme-corp: $180k base, $18k bonus, $125k equity annualized, total ~$323k."
+      },
+      "expected_output": "Total comp: Base $240k, Bonus $36k (15% at-risk), Equity annualized $200k ($800k ÷ 4 years), Benefits ~$18k+ (full health coverage + 6% 401k match + $1,500 HSA), Total est. annual comp ~$494k+. Side-by-side comparison table showing TechGiant (~$494k) vs Acme Corp (~$323k). Unlimited PTO caveat noted. Negotiation notes equity is harder to move at public companies — focus on base or signing bonus. tracking.md updated.",
+      "assertions": [
+        "Base shown as $240,000",
+        "Bonus shown as $36,000 or 15% of $240k, labeled at-risk",
+        "Equity annualized to approximately $200,000 ($800k ÷ 4 years)",
+        "Benefits value calculated including full health coverage and 6% 401k match",
+        "Total estimated annual comp for TechGiant is above $450,000",
+        "Side-by-side comparison table is present with TechGiant and Acme Corp columns",
+        "Comparison table includes base, bonus, equity, and total comp rows for both companies",
+        "Unlimited PTO caveat is noted (average 15 days actual usage)",
+        "Negotiation section notes that equity is harder to move at a public company",
+        "Negotiation section suggests focusing on base or signing bonus",
+        "Section appended to tracking.md under '## Offer Analysis'",
+        "Status in tracking.md updated to 'Offer Received'"
+      ]
+    },
+    {
+      "id": "analyze-offer-003",
+      "prompt": "/analyze-offer startupco product-manager",
+      "context": {
+        "research.md": "# Company Research: StartupCo\nSeed stage. 15 employees. Pre-revenue. Last raised $3M in 2025.",
+        "jd.md": "# Product Manager — StartupCo\nRole: First PM hire. Reports to CEO.",
+        "tracking.md": "# StartupCo — Product Manager\nStatus: Offer\nLast Updated: 2026-06-27"
+      },
+      "user_responses": {
+        "base": "$130,000",
+        "bonus": "No formal bonus structure",
+        "equity": "Options, 1% of company, 4-year vest with 1-year cliff. 409A strike price: $0.10/share. No current valuation shared.",
+        "benefits": "Health insurance: employee pays $300/month. No 401k match. No HSA.",
+        "pto": "Unlimited PTO",
+        "remote_policy": "Fully remote",
+        "start_date": "$10,000 signing bonus. Start date ASAP.",
+        "other_offers": "No other offers."
+      },
+      "expected_output": "Total comp: Base $130k, Bonus $0, Equity marked as highly speculative (seed stage, no valuation — 1% stake with unknown exit value), Benefits ~negative $3,600/year net (employee pays $300/month = $3,600/year health cost, no 401k match). Negotiation notes this is a high-risk/high-reward profile and flags the ASAP start date pressure as a potential tactic. Red flags section should note seed-stage equity is illiquid and highly uncertain, and the unlimited PTO at a 15-person startup may mean little in practice. tracking.md updated.",
+      "assertions": [
+        "Base shown as $130,000",
+        "Bonus shown as $0 or noted as absent",
+        "Equity flagged as speculative — seed stage with no disclosed valuation",
+        "Employee health insurance cost of $3,600/year ($300/month) noted as an offset to comp",
+        "Total compensation analysis accounts for the out-of-pocket benefits cost",
+        "Negotiation section identifies base and signing bonus as the main levers",
+        "Red flags or caveats section mentions seed-stage liquidity risk for equity",
+        "ASAP start date pressure flagged as a negotiating tactic to be aware of",
+        "Unlimited PTO caveat noted in context of a 15-person seed company",
+        "Market benchmarking guidance still provided (Glassdoor, LinkedIn, etc.)",
+        "Section appended to tracking.md under '## Offer Analysis'",
+        "Status in tracking.md updated to 'Offer Received'"
+      ]
+    },
+    {
+      "id": "analyze-offer-004",
+      "prompt": "/analyze-offer healthtech ml-lead",
+      "context": {
+        "research.md": "# Company Research: HealthTech\nSeries B. 200 employees. $45M raised. FDA designation process underway.",
+        "jd.md": "# ML Lead — HealthTech\nRole: Lead the applied ML team (4 reports). Owns model development and production ML infrastructure.",
+        "tracking.md": "# HealthTech — ML Lead\nStatus: Offer\nLast Updated: 2026-06-27\n\n## Post-Interview — 2026-06-25\n### Debrief\n### Excitement level: 10/10"
+      },
+      "user_responses": {
+        "base": "$210,000",
+        "bonus": "12% target, half guaranteed / half performance",
+        "equity": "RSUs, $600k grant, 4-year vest. No 409A shared.",
+        "benefits": "Health: $0 employee cost. 401k: 4% match. No HSA.",
+        "pto": "20 days",
+        "remote_policy": "Hybrid — 1 day/week in office (Boston)",
+        "start_date": "$15,000 signing bonus. Start by 2026-09-01.",
+        "other_offers": "No other offers."
+      },
+      "expected_output": "Total comp: Base $210k, Bonus $25.2k ($12,600 guaranteed + $12,600 at-risk), Equity annualized $150k ($600k ÷ 4 years, private company caveat), Benefits ~$12k+ (full health + 4% 401k match), Total est. annual comp ~$397k+. Signing bonus $15k noted separately. No comparison table (single offer). Negotiation section notes the 1-day/week hybrid policy is already flexible and the excitement level from tracking.md suggests strong fit — candidate has leverage to push on base or signing bonus without risk of losing interest. tracking.md updated.",
+      "assertions": [
+        "Base shown as $210,000",
+        "Bonus split shown: $12,600 guaranteed + $12,600 performance (or 6% + 6%), totaling $25,200",
+        "Equity annualized to approximately $150,000 ($600k ÷ 4 years)",
+        "Private company equity caveat present (no 409A valuation)",
+        "Full health coverage noted in benefits",
+        "Total estimated annual comp calculated above $390,000",
+        "Signing bonus of $15,000 noted separately",
+        "No comparison table present (single offer)",
+        "Negotiation section includes specific levers for this role",
+        "Market benchmarking guidance includes Levels.fyi and Glassdoor",
+        "Section appended to tracking.md under '## Offer Analysis'",
+        "Status in tracking.md updated to 'Offer Received'"
+      ]
+    }
+  ]
+}
