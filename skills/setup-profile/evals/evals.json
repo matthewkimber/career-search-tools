@@ -1,0 +1,40 @@
+{
+  "skill_name": "setup-profile",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I want to set up my job search profile. I'm a senior software engineer with 8 years of experience, mostly in backend Python and distributed systems. I've worked at Stripe and Airbnb.",
+      "expected_output": "Skill asks for information in phases (not all at once), then creates job-search/profile/profile.md with correct structure, narrative.md with positioning statement and preferred_template field, and references.md with the table template.",
+      "assertions": [
+        "job-search/profile/profile.md is created",
+        "job-search/profile/profile.md contains a Work Experience section",
+        "job-search/profile/narrative.md is created",
+        "job-search/profile/narrative.md contains a line starting with 'preferred_template:'",
+        "job-search/profile/references.md is created",
+        "job-search/profile/references.md contains a markdown table",
+        "Skill asked questions in phases, not all at once"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "hey can you help me get started with my job search? im a designer, been doing UX for about 5 years, mostly at startups",
+      "expected_output": "Skill handles casual phrasing, still collects information in structured phases, creates all three profile files with correct structure.",
+      "assertions": [
+        "job-search/profile/profile.md is created with a Skills section",
+        "job-search/profile/narrative.md is created",
+        "job-search/profile/references.md is created"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Run setup-profile but I only want to update my narrative — I already have a profile.md",
+      "expected_output": "Skill detects existing profile.md and asks whether to update Phase 1, Phase 2, or both. If user says Phase 2 only, it runs only the narrative phase and does not overwrite profile.md.",
+      "files": ["evals/files/existing-profile.md"],
+      "assertions": [
+        "Skill asks which phase to update rather than starting from scratch",
+        "If Phase 2 chosen, narrative.md is updated",
+        "If Phase 2 chosen, profile.md is not overwritten"
+      ]
+    }
+  ]
+}
