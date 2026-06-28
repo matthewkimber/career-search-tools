@@ -1,0 +1,125 @@
+{
+  "version": "1.0.0",
+  "skill_name": "post-interview",
+  "tests": [
+    {
+      "id": "post-interview-001",
+      "prompt": "/post-interview acme-corp senior-engineer",
+      "context": {
+        "team.md": "Hiring Manager: Sarah Chen, VP of Engineering. Interviewers: Tom Baker (Senior Engineer), Lisa Wang (Staff Engineer).",
+        "tracking.md": "# Acme Corp — Senior Engineer\nStatus: Interviewing\nApplied: 2026-06-20\n\n## Interview Prep — Hiring Manager — 2026-06-27\n[prep guide content]"
+      },
+      "user_responses": {
+        "interviewers": "Sarah Chen (VP Engineering), Tom Baker (Senior Engineer), Lisa Wang (Staff Engineer)",
+        "specific_moments": "Sarah — discussed how they're rebuilding their data pipeline. Tom — went deep on Kafka partitioning strategy, seemed impressed by my 5M events/day experience. Lisa — asked about my approach to code review and gave me positive signals.",
+        "overall_feel": "Felt strong overall. Unexpected topic: they asked about mentoring junior engineers, which I wasn't expecting.",
+        "unclear_items": "Unclear on whether the role is fully remote or hybrid — recruiter was vague.",
+        "excitement_level": "8"
+      },
+      "expected_output": "Three distinct thank-you notes (one per interviewer: Sarah Chen, Tom Baker, Lisa Wang). Each 100–150 words. Each references the specific conversation moment. Notes do not reuse the same sentences. Structured debrief with 'What went well', 'What to improve', 'Open questions', excitement 8/10, follow-up date 5 business days out. Section appended to tracking.md under '## Post-Interview — [Date]'. Status updated to 'Interviewed — Hiring Manager'.",
+      "assertions": [
+        "Three separate thank-you notes generated (one for Sarah Chen, one for Tom Baker, one for Lisa Wang)",
+        "Sarah Chen's note references the data pipeline discussion",
+        "Tom Baker's note references Kafka partitioning or the 5M events/day experience",
+        "Lisa Wang's note references the code review discussion",
+        "Each note is 100–150 words",
+        "No sentence is reused verbatim across the three notes",
+        "Each email note includes subject line: 'Thank you — Senior Engineer interview' or similar",
+        "Debrief includes 'What went well' with at least one specific moment",
+        "Debrief includes 'What to improve' with at least one specific moment",
+        "Open questions section includes the remote/hybrid ambiguity",
+        "Excitement level shown as 8/10",
+        "Follow-up date is approximately 5 business days from today",
+        "Section appended to tracking.md under '## Post-Interview'",
+        "Status in tracking.md updated to 'Interviewed'"
+      ]
+    },
+    {
+      "id": "post-interview-002",
+      "prompt": "/post-interview techgiant staff-engineer",
+      "context": {
+        "team.md": "Interviewer panel: Maria Lopez (Principal Engineer), Dev Patel (Staff Engineer), Anna Kim (Engineering Manager).",
+        "tracking.md": "# TechGiant — Staff Engineer\nStatus: Technical Round\nApplied: 2026-06-15"
+      },
+      "user_responses": {
+        "interviewers": "Maria Lopez (Principal Engineer), Dev Patel (Staff Engineer)",
+        "specific_moments": "Maria — we spent 20 minutes on my distributed caching design. She pushed back on my choice of consistent hashing and we had a great technical debate. Dev — systems design round, he seemed pleased when I mentioned the CAP theorem tradeoffs proactively.",
+        "overall_feel": "Solid. Unexpected: Maria asked a question about failure mode handling that caught me off guard — I recovered but could have been stronger.",
+        "unclear_items": "Not sure what level they'd title me — Staff vs Principal.",
+        "excitement_level": "9"
+      },
+      "expected_output": "Two distinct thank-you notes for Maria Lopez and Dev Patel (Anna Kim not interviewed with today). Each 100–150 words and distinct. Maria's note references the consistent hashing debate. Dev's note references the CAP theorem discussion. Debrief reflects the strong overall performance with one improvement area (failure mode handling). Excitement 9/10. Section appended to tracking.md.",
+      "assertions": [
+        "Two thank-you notes generated (Maria Lopez and Dev Patel only — not Anna Kim)",
+        "Maria Lopez's note references the consistent hashing discussion or technical debate",
+        "Dev Patel's note references the CAP theorem or systems design round",
+        "Each note is 100–150 words",
+        "Notes are distinct — no sentence reused verbatim",
+        "Debrief 'What to improve' mentions failure mode handling or preparation gap",
+        "Excitement level shown as 9/10",
+        "Open questions section mentions leveling ambiguity (Staff vs Principal)",
+        "Follow-up date is approximately 5 business days from today",
+        "Section appended to tracking.md under '## Post-Interview'",
+        "Status in tracking.md updated to 'Interviewed'"
+      ]
+    },
+    {
+      "id": "post-interview-003",
+      "prompt": "/post-interview startupco backend-engineer",
+      "context": {
+        "team.md": "Recruiter: Lisa Park. No other team info available.",
+        "tracking.md": "# StartupCo — Backend Engineer\nStatus: Recruiter Screen\nApplied: 2026-06-25"
+      },
+      "user_responses": {
+        "interviewers": "Lisa Park (Recruiter)",
+        "specific_moments": "Lisa — we talked about compensation expectations and she mentioned they're competitive with market. She also mentioned the team is fully remote-first.",
+        "overall_feel": "Good first call. Felt like a mutual screening. She asked about my timeline for making a move.",
+        "unclear_items": "Didn't get details on the tech stack depth they need — just Node.js at a high level.",
+        "excitement_level": "6"
+      },
+      "expected_output": "One thank-you note for Lisa Park referencing the compensation conversation and remote-first culture. 100–150 words. Debrief reflects a neutral recruiter screen tone. Open questions about tech stack depth. Excitement 6/10. Section appended to tracking.md.",
+      "assertions": [
+        "One thank-you note generated for Lisa Park",
+        "Note references the remote-first culture or compensation discussion",
+        "Note is 100–150 words",
+        "Debrief 'What went well' includes at least one positive moment from the call",
+        "Open questions section includes the tech stack depth question",
+        "Excitement level shown as 6/10",
+        "Follow-up date is approximately 5 business days from today",
+        "Section appended to tracking.md under '## Post-Interview'",
+        "Status in tracking.md updated to 'Interviewed — Recruiter screen' or similar",
+        "Note is appropriate in tone for a recruiter screen (not overly effusive)"
+      ]
+    },
+    {
+      "id": "post-interview-004",
+      "prompt": "/post-interview healthtech ml-lead",
+      "context": {
+        "team.md": "VP of AI: Dr. Priya Nair (formerly Google Brain). Engineering Manager: Chris Evans. Panel also included: Jordan Watts (ML Engineer, peer interviewer).",
+        "tracking.md": "# HealthTech — ML Lead\nStatus: Final Round\nApplied: 2026-06-10"
+      },
+      "user_responses": {
+        "interviewers": "Dr. Priya Nair (VP of AI), Chris Evans (Engineering Manager), Jordan Watts (ML Engineer)",
+        "specific_moments": "Priya — deep discussion on scaling NLP models for clinical text; she asked about my ACL papers directly. Chris — talked about team culture and managing ML project timelines. Jordan — a coding exercise on tokenization; I found an edge case they hadn't seen before.",
+        "overall_feel": "Best interview I've had in years. Unexpected: they offered to answer any questions I had about the FDA designation process, which was a great sign.",
+        "unclear_items": "Equity structure wasn't discussed — need to ask at offer stage.",
+        "excitement_level": "10"
+      },
+      "expected_output": "Three distinct thank-you notes for Dr. Priya Nair, Chris Evans, and Jordan Watts. Each 100–150 words and distinct. Priya's note references ACL papers or clinical NLP scaling. Chris's note references team culture discussion. Jordan's note references the tokenization coding exercise and the edge case found. Debrief reflects very high enthusiasm, excitement 10/10. Open questions note equity structure.",
+      "assertions": [
+        "Three thank-you notes generated (Dr. Priya Nair, Chris Evans, Jordan Watts)",
+        "Dr. Priya Nair's note references ACL papers or clinical NLP discussion",
+        "Chris Evans's note references team culture or ML project timeline discussion",
+        "Jordan Watts's note references the tokenization exercise or the edge case discovery",
+        "Each note is 100–150 words",
+        "No sentence is reused verbatim across the three notes",
+        "Excitement level shown as 10/10",
+        "Open questions section includes equity structure",
+        "Debrief 'What went well' includes the FDA designation conversation or edge case moment",
+        "Follow-up date is approximately 5 business days from today",
+        "Section appended to tracking.md under '## Post-Interview'",
+        "Status updated to 'Interviewed — Final' or equivalent"
+      ]
+    }
+  ]
+}
