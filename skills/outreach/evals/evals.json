@@ -1,0 +1,104 @@
+{
+  "version": "1.0.0",
+  "skill_name": "outreach",
+  "tests": [
+    {
+      "id": "outreach-001",
+      "prompt": "/outreach \"Jane Smith, recruiter\" acme-corp senior-engineer",
+      "context": {
+        "profile.md": "Name: Alex Rivera\nEmail: alex@example.com\nPhone: 555-0300\nWork Experience:\n- Senior Software Engineer at FinCo (2021–present): Built real-time data pipelines processing 5M events/day\n- Engineer at StartupX (2018–2021): Shipped core product features used by 100K users",
+        "narrative.md": "Positioning: Backend engineer who builds reliable, high-throughput systems. Targeting senior IC roles at data-driven companies.",
+        "research.md": "Acme Corp: Series C, 300 employees. Product: AcmeData, an analytics platform for mid-market companies. Engineering blog active, recently published post on Kafka migration.",
+        "team.md": "Jane Smith — Senior Technical Recruiter at Acme Corp. LinkedIn: linkedin.com/in/janesmith. Background: 8 years recruiting for engineering orgs."
+      },
+      "user_responses": {
+        "contact_type": "cold",
+        "their_role": "recruiter"
+      },
+      "expected_output": "Four variants: (A) LinkedIn connection request under 300 chars with specific hook; (B) 2-3 sentence LinkedIn message mentioning Acme or Jane's background; (C) email with subject line and 3 paragraphs, no generic opener; (D) 'N/A — cold contact'. File written to acme-corp/senior-engineer/outreach.md with Sent Log table.",
+      "assertions": [
+        "Variant A is 300 characters or fewer",
+        "Variant A does not open with 'Hi Jane' or 'I came across your profile'",
+        "Variant B is 2–3 sentences",
+        "Variant B includes a specific hook referencing Acme or Jane's recruiting background",
+        "Variant C includes a subject line",
+        "Variant C does not include 'I hope this email finds you well'",
+        "Variant D is 'N/A — cold contact' or equivalent",
+        "Output written to job-search/companies/acme-corp/positions/senior-engineer/outreach.md",
+        "File includes Sent Log table with Date, Channel, Variant, Response columns"
+      ]
+    },
+    {
+      "id": "outreach-002",
+      "prompt": "/outreach \"Carlos Mendez, VP Engineering\" techgiant staff-engineer",
+      "context": {
+        "profile.md": "Name: Jamie Wong\nEmail: jamie@example.com\nPhone: 555-0400\nWork Experience:\n- Principal Engineer at CloudCo: Designed distributed caching system, 99.99% uptime\n- Senior Engineer at WebCo: Led monolith-to-microservices migration",
+        "narrative.md": "Positioning: Staff-level engineer who solves infrastructure problems at scale. Target: platform engineering at top-tier tech companies.",
+        "research.md": "TechGiant: Published post on distributed tracing system. Open-sourced internal load balancing library. Carlos Mendez joined 18 months ago from a Series B startup.",
+        "team.md": "Carlos Mendez — VP Engineering, Platform at TechGiant. Prior: CTO at GridScale (Series B). Posts regularly on distributed systems on his blog."
+      },
+      "user_responses": {
+        "contact_type": "warm",
+        "their_role": "hiring manager",
+        "warm_connection": "We both attended the SREcon 2025 distributed systems workshop. I asked a question after his talk on load shedding."
+      },
+      "expected_output": "Four variants including a warm Variant D that references SREcon 2025 and the load shedding talk directly. Variants A, B, C tailored to VP Engineering hiring manager. File written to techgiant/staff-engineer/outreach.md.",
+      "assertions": [
+        "Variant A references TechGiant's open-source library or distributed systems work",
+        "Variant D references SREcon 2025 or the load shedding talk in the first sentence",
+        "Variant C email addresses Carlos by name",
+        "Variant B is no more than 3 sentences",
+        "Variant A is 300 characters or fewer",
+        "No filler opener in Variant C ('I hope this email finds you well', 'I am reaching out to...')",
+        "Output written to job-search/companies/techgiant/positions/staff-engineer/outreach.md"
+      ]
+    },
+    {
+      "id": "outreach-003",
+      "prompt": "/outreach \"Priya Nair, peer engineer\" openai ml-engineer",
+      "context": {
+        "profile.md": "Name: Sam Lee\nEmail: sam@example.com\nPhone: 555-0500\nWork Experience:\n- ML Engineer at BigCo: Fine-tuned LLMs for production recommendation system, 12% CTR improvement\n- Research Engineer at UniversityLab: Published 2 NLP papers at ACL 2024",
+        "narrative.md": "Positioning: ML practitioner who bridges research and production. Targeting applied ML roles at frontier AI companies.",
+        "research.md": "OpenAI: Known for GPT series, DALL-E, Whisper. Recently expanded applied research team. Focus on scaling and safety. Priya Nair joined from Google Brain, works on fine-tuning infrastructure."
+      },
+      "user_responses": {
+        "contact_type": "cold",
+        "their_role": "peer/IC"
+      },
+      "expected_output": "Four variants tailored to a peer IC (not recruiter or hiring manager). Tone should be collegial, not sales-like. Variant D is N/A for cold contact. Output written to openai/ml-engineer/outreach.md.",
+      "assertions": [
+        "Variants reference Priya's background (Google Brain or fine-tuning infrastructure)",
+        "Tone is collegial, peer-to-peer — not a sales pitch",
+        "Variant B mentions candidate's relevant ML background (LLM fine-tuning or ACL papers)",
+        "Variant D is 'N/A — cold contact' or equivalent",
+        "Variant A is 300 characters or fewer",
+        "Variant C asks for a soft outcome (coffee chat, quick call, share more)",
+        "Output written to job-search/companies/openai/positions/ml-engineer/outreach.md",
+        "team.md is absent — skill continues without error"
+      ]
+    },
+    {
+      "id": "outreach-004",
+      "prompt": "/outreach \"David Park, Director of Engineering\" startupco backend-engineer",
+      "context": {
+        "profile.md": "Name: Jordan Kim\nEmail: jordan@example.com\nPhone: 555-0600\nWork Experience:\n- Senior Backend Engineer at ScaleCo: Migrated monolith to microservices, reduced deploy time 80%\n- Engineer at AgencyX: Built REST APIs for 3 enterprise clients",
+        "narrative.md": "Positioning: Backend engineer focused on developer productivity and clean architecture. Targeting Series A–B startups.",
+        "research.md": "StartupCo: Series A, 30 engineers. Recently open-sourced a developer tooling library with 2K GitHub stars. David Park previously built engineering teams at two prior startups."
+      },
+      "user_responses": {
+        "contact_type": "warm",
+        "their_role": "hiring manager",
+        "warm_connection": "We're connected on LinkedIn — mutual connection is Sarah Chen, who worked with him at his last company."
+      },
+      "expected_output": "Variant D references Sarah Chen as the mutual connection in the first sentence. Variants A and B reference StartupCo's open-source library. Output written to startupco/backend-engineer/outreach.md.",
+      "assertions": [
+        "Variant D names 'Sarah Chen' in the first sentence",
+        "Variant A or B references StartupCo open-source library or GitHub stars",
+        "Variant C does not use generic opener",
+        "Variant A is 300 characters or fewer",
+        "Output written to job-search/companies/startupco/positions/backend-engineer/outreach.md",
+        "Sent Log table present in output file"
+      ]
+    }
+  ]
+}
