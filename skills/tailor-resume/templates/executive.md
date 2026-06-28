@@ -14,7 +14,7 @@
 ## Core Competencies
 [12–16 comma-separated leadership competencies — drawn from JD language]
 
-## Professional Experience
+## Work Experience
 
 ### [Job Title] — [Company]
 *[Month Year] – [Month Year] | [Location]*

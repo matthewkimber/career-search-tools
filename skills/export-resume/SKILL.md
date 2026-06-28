@@ -12,6 +12,15 @@ The format argument defaults to `docx` if not provided.
 
 ## DOCX Export
 
+Before running pandoc, check whether the reference DOCX exists:
+- Look for: ${CLAUDE_PLUGIN_ROOT}/skills/export-resume/templates/<template>-reference.docx
+- If it does NOT exist (only a .placeholder file is present), tell the user:
+  "The reference DOCX template for '<template>' hasn't been generated yet. Run this command once to create it:
+  pandoc --print-default-data-file reference.docx > <full-path-to-templates-dir>/<template>-reference.docx
+  Then open the file in Word or LibreOffice to customize the fonts and margins, and re-run /export-resume."
+  Stop here — do not proceed with export.
+- If the file exists, proceed with pandoc as described below.
+
 1. Extract the resume section from materials.md (content between the first `---` block and the ATS Keyword Analysis section).
 2. Write it to a temp file: ${CLAUDE_PROJECT_DIR}/job-search/companies/<company-slug>/positions/<role-slug>/resume-temp.md
 3. Read preferred_template from narrative.md to determine the reference DOCX.

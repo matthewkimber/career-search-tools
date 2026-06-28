@@ -1,0 +1,56 @@
+{
+  "version": "1.0.0",
+  "skill_name": "optimize-linkedin",
+  "tests": [
+    {
+      "id": "optimize-linkedin-001",
+      "prompt": "/optimize-linkedin",
+      "context": {
+        "profile.md": "Name: Jane Smith\nEmail: jane@example.com\nLinkedIn: linkedin.com/in/janesmith\nWork Experience:\n- Senior Analyst at DataCo (Jan 2020 – Present): Built ETL pipelines, 40% query improvement\n- Analyst at StartupX (Mar 2018 – Dec 2019): BI dashboards for product teams\nSkills: Python, SQL, Spark, data modeling, stakeholder management",
+        "narrative.md": "Positioning: Data engineer bridging analytics and engineering\nUnique Value: Make complex data pipelines understandable to non-technical stakeholders\nTarget Roles: Senior Data Engineer, Data Platform Lead\nTarget Companies: Fast-growing B2B SaaS"
+      },
+      "expected_output": "linkedin-draft.md created with all required sections: Headline (3 variants), About, Experience Bullets per role, Skills (top 50 grouped), Featured Section Ideas, Open to Work tips.",
+      "assertions": [
+        "linkedin-draft.md is created at job-search/profile/linkedin-draft.md",
+        "File contains a Headline section with exactly 3 variants",
+        "Headline variants are under 220 characters each",
+        "About section is present and under 2,600 characters",
+        "Experience Bullets section covers each role from profile.md",
+        "Skills section groups skills under Technical, Domain, Leadership, Industry",
+        "Featured Section Ideas section has 3–5 suggestions",
+        "Open to Work section present with recruiter visibility guidance",
+        "User told where the file was saved"
+      ]
+    },
+    {
+      "id": "optimize-linkedin-002",
+      "prompt": "/optimize-linkedin",
+      "context": {
+        "profile.md": "Name: Michael Chen\nEmail: m@example.com\nLinkedIn: linkedin.com/in/mchentech\nWork Experience:\n- CTO at ScaleCo (Jan 2018 – Present): 80-person eng org, $50M ARR, cloud migration\n- VP Engineering at GrowthCo (Jan 2015 – Dec 2017): rebuilt core platform, 40 engineers",
+        "narrative.md": "Positioning: Engineering executive who scales organizations from growth to enterprise\nUnique Value: Combine technical depth with organizational design skills\nTarget Roles: CTO, VP Engineering at Series C+ companies"
+      },
+      "expected_output": "LinkedIn draft with executive-appropriate headline variants (leadership-focused), about section emphasizing team scale, experience bullets quantifying org impact.",
+      "assertions": [
+        "Headline variants emphasize leadership and org scale, not individual contributor work",
+        "About section mentions team size or revenue scale",
+        "Experience bullets lead with outcomes (e.g., 'Scaled engineering org from 40 to 80...')",
+        "linkedin-draft.md created at correct path"
+      ]
+    },
+    {
+      "id": "optimize-linkedin-003",
+      "prompt": "/optimize-linkedin",
+      "context": {
+        "profile.md": "Name: Sara Lee\nEmail: sara@example.com\nWork Experience:\n- PM at TechCo (Mar 2021 – Present): Shipped 3 products, $10M ARR, NPS +25\n- APM at StartupY (Jan 2019 – Feb 2021): Led roadmap for B2B SaaS\nSkills: roadmap planning, OKRs, user research, Figma, SQL",
+        "narrative.md": "Positioning: Product manager who combines user empathy with data-driven decisions\nTarget: Product Lead or Group PM at consumer or prosumer tech companies"
+      },
+      "expected_output": "Headlines lead with product value not title, About section opens with a strong hook about shipping products users love, skills grouped appropriately for PM role.",
+      "assertions": [
+        "Headline variants do not lead with 'Product Manager at TechCo'",
+        "About section hook appears in first 2 lines (before 'see more')",
+        "Skills section includes SQL and Figma in Technical group",
+        "Featured Section Ideas references potential case studies or shipped product write-ups"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "version": "1.0.0",
+  "skill_name": "write-cover-letter",
+  "tests": [
+    {
+      "id": "write-cover-letter-001",
+      "prompt": "/write-cover-letter acme-corp senior-engineer",
+      "context": {
+        "profile.md": "Name: Jane Smith\nEmail: jane@example.com\nPhone: 555-0100\nWork Experience:\n- Senior Analyst at DataCo: Built ETL pipelines, reduced query time 40%",
+        "narrative.md": "Positioning: Data engineer who bridges analytics and engineering. Target: fast-growing B2B SaaS companies.",
+        "research.md": "Acme Corp mission: Make data accessible to every business. Recent news: Launched AcmeData platform Q1 2026.",
+        "jd.md": "Role: Senior Data Engineer. Top requirements: ETL expertise, Python, cross-team collaboration.",
+        "team.md": "Hiring Manager: David Park, Director of Engineering"
+      },
+      "expected_output": "A cover letter under 400 words addressed to David Park, referencing AcmeData platform launch, quantified accomplishment from profile, narrative thread, and a call to discuss.",
+      "assertions": [
+        "Letter is addressed to 'David Park' (from team.md)",
+        "Mentions AcmeData platform or Acme Corp mission (from research.md)",
+        "Includes at least one quantified accomplishment",
+        "Total word count is 400 or fewer",
+        "No filler phrases: 'I am passionate', 'great fit', 'excited to'",
+        "Opening sentence does not begin with 'I am writing to apply'",
+        "Appended to materials.md under acme-corp/senior-engineer/"
+      ]
+    },
+    {
+      "id": "write-cover-letter-002",
+      "prompt": "/write-cover-letter bigbank vp-analytics",
+      "context": {
+        "profile.md": "Name: John Doe\nEmail: john@example.com\nPhone: 555-0200\nWork Experience:\n- Head of Analytics at FinCo: Led 12-person team, 35% revenue growth",
+        "narrative.md": "Positioning: Analytics leader focused on revenue. Seeks Director+ roles in financial services.",
+        "research.md": "BigBank strategic priority: AI-driven credit decisioning. Announced $200M investment in data infrastructure.",
+        "jd.md": "Role: VP of Analytics. Requirements: leadership, financial services experience, executive reporting."
+      },
+      "expected_output": "Cover letter under 400 words addressed to 'Hiring Team' (no team.md), referencing BigBank AI credit decisioning initiative.",
+      "assertions": [
+        "Addressed to 'Hiring Team' when team.md is absent",
+        "References BigBank's AI or data infrastructure initiative",
+        "Narrative thread connects analyst background to VP-level ambition",
+        "Appended to materials.md under bigbank/vp-analytics/",
+        "Signed with John Doe's name, email, and phone"
+      ]
+    },
+    {
+      "id": "write-cover-letter-003",
+      "prompt": "/write-cover-letter startupco backend-engineer",
+      "context": {
+        "profile.md": "Name: Alex Rivera\nEmail: alex@example.com\nPhone: 555-0300\nWork Experience:\n- Software Engineer at MegaCo: Built microservices handling 10M requests/day",
+        "narrative.md": "Positioning: Backend engineer who builds for scale. Seeking startup engineering roles.",
+        "research.md": "StartupCo: Series B, 50-person team, recently open-sourced their core infrastructure library.",
+        "jd.md": "Role: Senior Backend Engineer. Requirements: distributed systems, Go, Kubernetes.",
+        "team.md": "Hiring Manager: Priya Nair, VP Engineering"
+      },
+      "expected_output": "Cover letter referencing StartupCo open-source initiative, distributed systems accomplishment, and the match between startup culture and the candidate's target.",
+      "assertions": [
+        "References open-source library or Series B context from research.md",
+        "Includes distributed systems accomplishment with 10M requests/day metric",
+        "Addressed to Priya Nair",
+        "3–4 paragraphs total",
+        "Appended to materials.md under startupco/backend-engineer/"
+      ]
+    },
+    {
+      "id": "write-cover-letter-004",
+      "prompt": "/write-cover-letter techgiant staff-engineer",
+      "context": {
+        "profile.md": "Name: Jamie Wong\nEmail: jamie@example.com\nPhone: 555-0400\nWork Experience:\n- Principal Engineer at CloudCo (Feb 2019 – Present): Designed distributed caching system, 99.99% uptime, 200ms p99 latency\n- Senior Engineer at WebCo (Jan 2016 – Jan 2019): Led migration of monolith to microservices",
+        "narrative.md": "Positioning: Staff-level engineer who solves infrastructure problems at scale. Target: platform engineering at top-tier tech companies.",
+        "research.md": "TechGiant engineering blog: Recently published post on their new distributed tracing system. Open-sourced their internal load balancing library.",
+        "jd.md": "Role: Staff Engineer, Platform. Requirements: distributed systems design, technical leadership, cross-org influence.",
+        "team.md": "Hiring Manager: Lin Zhang, Director of Platform Engineering"
+      },
+      "expected_output": "Cover letter under 400 words addressed to Lin Zhang, referencing TechGiant's open-source contributions, and connecting candidate's distributed systems work to the staff engineer scope.",
+      "assertions": [
+        "Addressed to 'Lin Zhang'",
+        "References TechGiant's distributed tracing or open-source library",
+        "Mentions 99.99% uptime or 200ms p99 latency accomplishment",
+        "Connects individual contributor work to cross-org influence required for Staff Engineer",
+        "Appended to materials.md under techgiant/staff-engineer/",
+        "Word count 400 or fewer"
+      ]
+    }
+  ]
+}
