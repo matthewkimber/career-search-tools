@@ -26,9 +26,13 @@ A Claude Code + Claude Cowork plugin that turns job searching into a structured,
 
 ## Install
 
-**Claude Code — from the marketplace:**
+**Claude Code — from GitHub:**
 ```bash
-claude plugin install career-search-tools
+# Step 1: add the marketplace (one-time)
+claude plugin marketplace add matthewkimber/career-search-tools
+
+# Step 2: install the plugin
+/plugin install career-search-tools@career-search-tools
 ```
 
 **Claude Code — from a local clone:**
