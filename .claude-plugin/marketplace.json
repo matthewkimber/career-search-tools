@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "career-search-tools",
+  "description": "A skill marketplace for job seekers — profile building, resume tailoring, company research, interview prep, and application tracking.",
+  "owner": {
+    "name": "Matthew Kimber"
+  },
+  "plugins": [
+    {
+      "name": "career-search-tools",
+      "displayName": "Career Search Tools",
+      "source": "./",
+      "description": "A structured toolkit to help job seekers build materials, research companies, prepare for interviews, and track applications.",
+      "homepage": "https://github.com/matthewkimber/career-search-tools",
+      "repository": "https://github.com/matthewkimber/career-search-tools",
+      "license": "Apache-2.0",
+      "category": "productivity",
+      "tags": ["career", "job-search", "resume", "interview", "cover-letter", "linkedin", "ats"]
+    }
+  ]
+}
