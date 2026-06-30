@@ -2,10 +2,11 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "career-search-tools",
   "displayName": "Career Search Tools",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A structured toolkit to help job seekers build materials, research companies, prepare for interviews, and track applications.",
   "author": {
-    "name": "Matthew Kimber"
+    "name": "Matthew Kimber",
+    "email": "matthew.kimber@gmail.com"
   },
   "homepage": "https://github.com/matthewkimber/career-search-tools",
   "repository": "https://github.com/matthewkimber/career-search-tools",
